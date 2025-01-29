@@ -22,7 +22,7 @@ import glob
 import os
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--input_dir", type=str, default="~/groot_mobility_gen_data/replays")
+parser.add_argument("--input_dir", type=str, default="~/MobilityGenData/replays")
 args = parser.parse_args()
 
 directory = os.path.expanduser(args.input_dir)
