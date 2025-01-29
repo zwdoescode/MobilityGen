@@ -20,14 +20,14 @@ from pybind11.setup_helpers import Pybind11Extension
 
 ext_modules = [
     Pybind11Extension(
-        "groot_mobility_gen_path_planner._groot_mobility_gen_path_planner_C",
+        "mobility_gen_path_planner._mobility_gen_path_planner_C",
         ["src/python_bindings.cpp"],  # Sort source files for reproducibility
         include_dirs=["src"]
     ),
 ]
 
 setup(
-    name="groot_mobility_gen_path_planner",
+    name="mobility_gen_path_planner",
     packages=find_packages(),
     ext_modules=ext_modules
 )

@@ -17,9 +17,9 @@
 import pytest
 import numpy as np
 
-import groot_mobility_gen_path_planner._groot_mobility_gen_path_planner_C as _C
+import mobility_gen_path_planner._mobility_gen_path_planner_C as _C
 
-from groot_mobility_gen_path_planner import generate_paths
+from mobility_gen_path_planner import generate_paths
 
 
 def test_plan_all_paths():
