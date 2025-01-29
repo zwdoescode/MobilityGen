@@ -1,15 +1,23 @@
 <h1 align="center"><span>Groot Mobility Gen</span></h1>
 
-*Groot Mobility Gen* is a toolset built on [NVIDIA Isaac Sim](https://developer.nvidia.com/isaac/sim) that 
+<div align="center">
+A toolset built on <a href="https://developer.nvidia.com/isaac/sim">NVIDIA Isaac Sim</a> that 
 allows you to easily collect data for mobile robots.
-
+<br></br>
 <div>
-<img src="assets/robots.png" width=320/>
-<br/>
-<img src="assets/gmg_screencast_scale.GIF" width=320/>
+<img src="assets/robots.png" width="640px"/>
+<img src="assets/gmg_screencast_scale.GIF" width="640px"/>
 </div>
 
-Groot Mobility Gen features
+Read below to learn more.
+
+</div>
+
+## Overview
+
+Groot Mobility Gen is a toolset built on [NVIDIA Isaac Sim](https://developer.nvidia.com/isaac/sim) that enables you to easily collect data for mobile robots.  
+
+It supports
 
 - ***Rich ground truth data***
 
@@ -118,7 +126,7 @@ Next, we'll call ``link_app.sh`` to link the Isaac Sim installation directory to
 
 That's it!  If everything worked, you should see Isaac Sim open with a window titled ``Groot Mobility Gen`` appear.  
 
-<img src="./assets/extension_gui.png" height=320>
+<img src="./assets/extension_gui.png" height="640px">
 
 Read [Usage](#usage) below to learn how to generate data with Groot Mobility Gen.
 
