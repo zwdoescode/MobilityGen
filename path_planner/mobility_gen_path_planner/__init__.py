@@ -17,7 +17,7 @@ from typing import Tuple, List
 import numpy as np
 import random
 from dataclasses import dataclass
-import groot_mobility_gen_path_planner._groot_mobility_gen_path_planner_C as _C
+import mobility_gen_path_planner._mobility_gen_path_planner_C as _C
 
 
 @dataclass

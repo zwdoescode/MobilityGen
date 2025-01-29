@@ -71,7 +71,7 @@ if __name__ == "__main__":
                 "./app/python.sh",
                 "scripts/replay_implementation.py",
                 "--ext-folder", "exts",
-                "--enable", "groot.mobility.gen",
+                "--enable", "omni.ext.mobility_gen",
                 "--enable", "omni.isaac.examples",
                 "--input_path", recording_path,
                 "--output_path", output_path,

@@ -34,13 +34,13 @@ It supports
     - Differential drive - Jetbot, Carter
     - Quadruped - Spot
     - Humanoid - H1
-    - *Implement your own by subclassing the [Robot](./exts/groot.mobility.gen/groot/mobility/gen/robots.py) class*
+    - *Implement your own by subclassing the [Robot](./exts/omni.ext.mobility_gen/omni/ext/mobility_gen/robots.py) class*
 
 - ***Many data collection methods***
 
     - Manual - Keyboard Teleoperation, Gamepad Teleoperation
     - Automated - Random Accelerations, Random Path Following
-    - *Implement your own by subclassing the [Scenario](./exts/groot.mobility.gen/groot/mobility/gen/scenarios.py) class*
+    - *Implement your own by subclassing the [Scenario](./exts/omni.ext.mobility_gen/omni/ext/mobility_gen/scenarios.py) class*
 
 This enables you to train models and test algorithms related to robot mobility.
 
@@ -247,8 +247,8 @@ That's it!  Once you've gotten the hang of how to record data, you might try
 
     > These methods don't rely on human input, and automatically "restart" when finished to create new recordings.
 
-2. Implement or customize your own [Robot](./exts/groot.mobility.gen/groot/mobility/gen/robots.py) class.
-3. Implement or customize your own [Scenario](./exts/groot.mobility.gen/groot/mobility/gen/scenarios.py) class.
+2. Implement or customize your own [Robot](./exts/omni.ext.mobility_gen/omni/ext/mobility_gen/robots.py) class.
+3. Implement or customize your own [Scenario](./exts/omni.ext.mobility_gen/omni/ext/mobility_gen/scenarios.py) class.
 
 If you find MobilityGen helpful for your use case, run in to issues, or have any questions please [let us know!](https://github.com/NVlabs/MobilityGen/issues).
 
@@ -316,13 +316,13 @@ You can implement a new robot for use with MobilityGen.
 
 The general workflow is as follows:
 
-1. Subclass the [Robot](exts/groot.mobility.gen/groot/mobility/gen/robots.py) class.
+1. Subclass the [Robot](exts/omni.ext.mobility_gen/omni/ext/mobility_gen/robots.py) class.
 2. Implement the ``build()`` method.  This method is responsible for adding the robot to the USD stage.
 2. Implement the ``write_action()`` method.  This method performs the logic of applying the linear, angular velocity command.
 3. Overwrite the common class parameters (like ``physics_dt``, ``occupancy_map_z_min``, etc.)
 4. Register the robot class by using the ``ROBOT.register()`` decorator.  This makes the custom robot discoverable.
 
-We recommend referencing the example robots in [robots.py](exts/groot.mobility.gen/groot/mobility/gen/robots.py) for more details.
+We recommend referencing the example robots in [robots.py](exts/omni.ext.mobility_gen/omni/ext/mobility_gen/robots.py) for more details.
 
 A good way to start could be simply by modifying an existing robot.  For example, you might change the position at which
 the camera is mounted on the H1 robot.
@@ -334,12 +334,12 @@ You can implement a new data recording scenario for use with MobilityGen.
 
 The general workflow is as follows:
 
-1. Subclass the [Scenario](exts/groot.mobility.gen/groot/mobility/gen/scenarios.py) class.
+1. Subclass the [Scenario](exts/omni.ext.mobility_gen/omni/ext/mobility_gen/scenarios.py) class.
 2. Implement the ``reset()`` method.  This method is responsible for randomizing / initializing the scenario (ie: spawning the robot).
 3. Implement the ``step()`` method.  This method is responsible for incrementing the scenario by one physics step.
 4. Register the scenario class by using the ``SCENARIOS.register()`` decorator.  This makes the custom scenario discoverable.
 
-We recommend referencing the example scenarios in [scenarios.py](exts/groot.mobility.gen/groot/mobility/gen/scenarios.py) for more details.
+We recommend referencing the example scenarios in [scenarios.py](exts/omni.ext.mobility_gen/omni/ext/mobility_gen/scenarios.py) for more details.
 
 A good way to start could be simply by modifying an existing scenario.  For example, you might implement a new method
 for generating random motions.
