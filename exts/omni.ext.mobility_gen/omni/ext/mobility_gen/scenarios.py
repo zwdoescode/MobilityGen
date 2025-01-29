@@ -17,16 +17,16 @@
 import numpy as np
 from typing import Tuple
 
-from groot_mobility_gen_path_planner import generate_paths
+from mobility_gen_path_planner import generate_paths
 
-from groot.mobility.gen.utils.path_utils import PathHelper, vector_angle
-from groot.mobility.gen.utils.registry import Registry
-from groot.mobility.gen.common import Module, Buffer
-from groot.mobility.gen.robots import Robot
-from groot.mobility.gen.occupancy_map import OccupancyMap
+from omni.ext.mobility_gen.utils.path_utils import PathHelper, vector_angle
+from omni.ext.mobility_gen.utils.registry import Registry
+from omni.ext.mobility_gen.common import Module, Buffer
+from omni.ext.mobility_gen.robots import Robot
+from omni.ext.mobility_gen.occupancy_map import OccupancyMap
 
-import groot.mobility.gen.pose_samplers as pose_samplers
-import groot.mobility.gen.inputs as inputs
+import omni.ext.mobility_gen.pose_samplers as pose_samplers
+import omni.ext.mobility_gen.inputs as inputs
 
 
 class Scenario(Module):

@@ -25,10 +25,10 @@ import subprocess
 import glob
 import argparse
 
-if "GROOT_MOBILITY_GEN_DATA" in os.environ:
-    DATA_DIR = os.environ['GROOT_MOBILITY_GEN_DATA']
+if "MOBILITY_GEN_DATA" in os.environ:
+    DATA_DIR = os.environ['MOBILITY_GEN_DATA']
 else:
-    DATA_DIR = os.path.expanduser("~/groot_mobility_gen_data")
+    DATA_DIR = os.path.expanduser("~/MobilityGenData")
 
 if __name__ == "__main__":
 

@@ -19,5 +19,5 @@
 
 ./app/isaac-sim.sh \
     --ext-folder exts \
-    --enable groot.mobility.gen \
+    --enable omni.ext.mobility_gen \
     --enable omni.isaac.examples

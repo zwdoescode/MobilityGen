@@ -27,12 +27,12 @@ from omni.isaac.occupancy_map.utils import compute_coordinates,  update_location
 from pxr import Sdf, UsdGeom, UsdPhysics, Usd, UsdShade, Kind
 
 from ..types import Point2d
-from groot.mobility.gen.utils.global_utils import (
+from omni.ext.mobility_gen.utils.global_utils import (
     get_app,
     get_stage
 )
-from groot.mobility.gen.utils.prim_utils import prim_compute_bbox
-from groot.mobility.gen.occupancy_map import (
+from omni.ext.mobility_gen.utils.prim_utils import prim_compute_bbox
+from omni.ext.mobility_gen.occupancy_map import (
     OccupancyMap, 
     OccupancyMapDataValue, 
     ROS_FREESPACE_THRESH_DEFAULT, 

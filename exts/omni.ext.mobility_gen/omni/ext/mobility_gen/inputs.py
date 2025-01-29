@@ -19,7 +19,7 @@ import omni
 import numpy as np
 
 
-from groot.mobility.gen.common import Module, Buffer
+from omni.ext.mobility_gen.common import Module, Buffer
 
     
 #=========================================================

@@ -21,8 +21,8 @@ import os
 from collections import OrderedDict
 
 
-from groot.mobility.gen.occupancy_map import OccupancyMap
-from groot.mobility.gen.config import Config
+from omni.ext.mobility_gen.occupancy_map import OccupancyMap
+from omni.ext.mobility_gen.config import Config
 
 
 class Reader:

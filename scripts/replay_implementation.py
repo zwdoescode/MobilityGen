@@ -34,10 +34,10 @@ import tqdm
 
 import omni.replicator.core as rep
 
-from groot.mobility.gen.utils.global_utils import get_world
-from groot.mobility.gen.writer import Writer
-from groot.mobility.gen.reader import Reader
-from groot.mobility.gen.build import load_scenario
+from omni.ext.mobility_gen.utils.global_utils import get_world
+from omni.ext.mobility_gen.writer import Writer
+from omni.ext.mobility_gen.reader import Reader
+from omni.ext.mobility_gen.build import load_scenario
 
 
 if __name__ == "__main__":

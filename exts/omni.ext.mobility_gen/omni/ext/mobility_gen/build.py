@@ -21,13 +21,13 @@ import omni.isaac.core.objects as objects
 from omni.isaac.core.utils.stage import add_reference_to_stage
 
 
-from groot.mobility.gen.occupancy_map import OccupancyMap
-from groot.mobility.gen.config import Config
-from groot.mobility.gen.utils.occupancy_map_utils import occupancy_map_generate_from_prim_async
-from groot.mobility.gen.utils.global_utils import new_stage, new_world, set_viewport_camera
-from groot.mobility.gen.scenarios import Scenario, SCENARIOS
-from groot.mobility.gen.robots import ROBOTS
-from groot.mobility.gen.reader import Reader
+from omni.ext.mobility_gen.occupancy_map import OccupancyMap
+from omni.ext.mobility_gen.config import Config
+from omni.ext.mobility_gen.utils.occupancy_map_utils import occupancy_map_generate_from_prim_async
+from omni.ext.mobility_gen.utils.global_utils import new_stage, new_world, set_viewport_camera
+from omni.ext.mobility_gen.scenarios import Scenario, SCENARIOS
+from omni.ext.mobility_gen.robots import ROBOTS
+from omni.ext.mobility_gen.reader import Reader
 
 
 

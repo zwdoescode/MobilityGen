@@ -19,9 +19,9 @@ import PIL.Image
 import numpy as np
 import shutil
 
-from groot.mobility.gen.utils.global_utils import save_stage
-from groot.mobility.gen.config import Config
-from groot.mobility.gen.occupancy_map import OccupancyMap
+from omni.ext.mobility_gen.utils.global_utils import save_stage
+from omni.ext.mobility_gen.config import Config
+from omni.ext.mobility_gen.occupancy_map import OccupancyMap
 
 
 class Writer:
