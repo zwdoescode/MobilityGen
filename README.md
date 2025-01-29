@@ -1,4 +1,4 @@
-<h1 align="center"><span>Groot Mobility Gen</span></h1>
+<h1 align="center"><span>MobilityGen</span></h1>
 
 <div align="center">
 A toolset built on <a href="https://developer.nvidia.com/isaac/sim">NVIDIA Isaac Sim</a> that 
@@ -15,7 +15,7 @@ Read below to learn more.
 
 ## Overview
 
-Groot Mobility Gen is a toolset built on [NVIDIA Isaac Sim](https://developer.nvidia.com/isaac/sim) that enables you to easily collect data for mobile robots.  
+MobilityGen is a toolset built on [NVIDIA Isaac Sim](https://developer.nvidia.com/isaac/sim) that enables you to easily collect data for mobile robots.  
 
 It supports
 
@@ -27,24 +27,24 @@ It supports
     - RGB Images
     - Segmentation Images
     - Depth Images
-    - *If you're interested in more, [let us know!](https://github.com/NVlabs/NVlabs-GR00T-Gen-MobilityGen/issues)*
+    - *If you're interested in more, [let us know!](https://github.com/NVlabs/MobilityGen/issues)*
 
 - ***Many robot types*** 
 
     - Differential drive - Jetbot, Carter
     - Quadruped - Spot
     - Humanoid - H1
-    - *Implement your own by subclassing the [Robot](./exts/groot.mobility.gen/groot/mobility/gen/robots.py) class*
+    - *Implement your own by subclassing the [Robot](./exts/omni.ext.mobility_gen/omni/ext/mobility_gen/robots.py) class*
 
 - ***Many data collection methods***
 
     - Manual - Keyboard Teleoperation, Gamepad Teleoperation
     - Automated - Random Accelerations, Random Path Following
-    - *Implement your own by subclassing the [Scenario](./exts/groot.mobility.gen/groot/mobility/gen/scenarios.py) class*
+    - *Implement your own by subclassing the [Scenario](./exts/omni.ext.mobility_gen/omni/ext/mobility_gen/scenarios.py) class*
 
 This enables you to train models and test algorithms related to robot mobility.
 
-To get started with Groot Mobility Gen follow the setup and usage instructions below!
+To get started with MobilityGen follow the setup and usage instructions below!
 
 ## Table of Contents
 
@@ -60,7 +60,7 @@ To get started with Groot Mobility Gen follow the setup and usage instructions b
 <a id="setup"></a>
 ## 🛠️ Setup
 
-Follow these steps to set up Groot Mobility Gen
+Follow these steps to set up MobilityGen
 
 ### Step 1 - Install Isaac Sim
 
@@ -71,7 +71,7 @@ Follow these steps to set up Groot Mobility Gen
 1. Clone the repository
 
     ```bash
-    git clone <repo_url> groot_mobility_gen
+    git clone <repo_url> MobilityGen
     ```
 
 > Remember the path you cloned to for the next step.
@@ -83,7 +83,7 @@ Next, we'll call ``link_app.sh`` to link the Isaac Sim installation directory to
 1. Navigate to the repo root
 
     ```bash
-    cd groot_mobility_gen
+    cd MobilityGen
     ```
 
 2. Run the following to link the ``app`` folder
@@ -101,7 +101,7 @@ Next, we'll call ``link_app.sh`` to link the Isaac Sim installation directory to
 1. Navigate to the path planner directory
 
     ```bash
-    cd groot_mobility_gen/path_planner
+    cd MobilityGen/path_planner
     ```
 
 2. Install with pip using the Isaac Sim python interpreter
@@ -115,7 +115,7 @@ Next, we'll call ``link_app.sh`` to link the Isaac Sim installation directory to
 1. Navigate to the repo root
 
     ```bash
-    cd groot_mobility_gen
+    cd MobilityGen
     ```
 
 2. Launch Isaac Sim with required extensions enabled by calling
@@ -124,23 +124,23 @@ Next, we'll call ``link_app.sh`` to link the Isaac Sim installation directory to
     ./scripts/launch_sim.sh
     ```
 
-That's it!  If everything worked, you should see Isaac Sim open with a window titled ``Groot Mobility Gen`` appear.  
+That's it!  If everything worked, you should see Isaac Sim open with a window titled ``MobilityGen`` appear.  
 
 <img src="./assets/extension_gui.png" height="640px">
 
-Read [Usage](#usage) below to learn how to generate data with Groot Mobility Gen.
+Read [Usage](#usage) below to learn how to generate data with MobilityGen.
 
 <a id="usage"></a>
 ## 👍 Basic Usage
 
-Below details a typical workflow for collecting data with Groot Mobility Gen.
+Below details a typical workflow for collecting data with MobilityGen.
 
 ### Step 1 - Launch Isaac Sim
 
 1. Navigate to the repo root
 
     ```bash
-    cd groot_mobility_gen
+    cd MobilityGen
     ```
 
 2. Launch Isaac Sim with required extensions enabled by calling
@@ -151,7 +151,7 @@ Below details a typical workflow for collecting data with Groot Mobility Gen.
 
 ### Step 2 - Build a scenario
 
-This assumes you see the Groot Mobility Gen extension window.
+This assumes you see the MobilityGen extension window.
 
 1. Under Scene USD URL / Path copy and paste the following
 
@@ -193,7 +193,7 @@ Once you're comfortable, you can record a log.
 2. Move the robot around
 3. Click ``Stop Recording`` to stop recording.
 
-The data is recorded to ``~/groot_mobility_gen_data/recordings`` by default.
+The data is recorded to ``~/MobilityGenData/recordings`` by default.
 
 ### Step 6 - Render data
 
@@ -206,7 +206,7 @@ Rendering the sensor data is done offline.  To do this call the following
 2. Navigate to the repo root
 
     ```bash
-    cd groot_mobility_gen
+    cd MobilityGen
     ```
 
 3. Run the ``scripts/replay_directory.py`` script to replay and render all recordings in the directory
@@ -218,7 +218,7 @@ Rendering the sensor data is done offline.  To do this call the following
     > Note: For speed for this tutorial, we use a render interval of 200.  If our physics timestep is 200 FPS, this means we 
     > render 1 image per second.
 
-That's it! Now the data with renderings should be stored in ``~/groot_mobility_gen_data/replays``
+That's it! Now the data with renderings should be stored in ``~/MobilityGenData/replays``
 
 ### Step 7 - Visualize the Data
 
@@ -247,10 +247,10 @@ That's it!  Once you've gotten the hang of how to record data, you might try
 
     > These methods don't rely on human input, and automatically "restart" when finished to create new recordings.
 
-2. Implement or customize your own [Robot](./exts/groot.mobility.gen/groot/mobility/gen/robots.py) class.
-3. Implement or customize your own [Scenario](./exts/groot.mobility.gen/groot/mobility/gen/scenarios.py) class.
+2. Implement or customize your own [Robot](./exts/omni.ext.mobility_gen/omni/ext/mobility_gen/robots.py) class.
+3. Implement or customize your own [Scenario](./exts/omni.ext.mobility_gen/omni/ext/mobility_gen/scenarios.py) class.
 
-If you find Groot Mobility Gen helpful for your use case, run in to issues, or have any questions please [let us know!](https://github.com/NVlabs/NVlabs-GR00T-Gen-MobilityGen/issues).
+If you find MobilityGen helpful for your use case, run in to issues, or have any questions please [let us know!](https://github.com/NVlabs/MobilityGen/issues).
 
 <a id="contributing"></a>
 
@@ -267,7 +267,7 @@ This is the same as in the basic usage.
 1. Navigate to the repo root
 
     ```bash
-    cd groot_mobility_gen
+    cd MobilityGen
     ```
 
 2. Launch Isaac Sim with required extensions enabled by calling
@@ -303,7 +303,7 @@ After a few seconds, you should see the scene and occupancy map appear.
 
 3. Click ``Stop Recording`` to stop recording data.
 
-The data is recorded to ``~/groot_mobility_gen_data/recordings`` by default.
+The data is recorded to ``~/MobilityGenData/recordings`` by default.
 
 #### Step 4 - Render and visualize sensor data
 
@@ -312,17 +312,17 @@ This is the same as before.  Please refer to Step 6-7 of the "Basic Usage" guide
 <a id="how-to-custom-robot"></a>
 ### How to implement a new robot
 
-You can implement a new robot for use with Groot Mobility Gen.
+You can implement a new robot for use with MobilityGen.
 
 The general workflow is as follows:
 
-1. Subclass the [Robot](exts/groot.mobility.gen/groot/mobility/gen/robots.py) class.
+1. Subclass the [Robot](exts/omni.ext.mobility_gen/omni/ext/mobility_gen/robots.py) class.
 2. Implement the ``build()`` method.  This method is responsible for adding the robot to the USD stage.
 2. Implement the ``write_action()`` method.  This method performs the logic of applying the linear, angular velocity command.
 3. Overwrite the common class parameters (like ``physics_dt``, ``occupancy_map_z_min``, etc.)
 4. Register the robot class by using the ``ROBOT.register()`` decorator.  This makes the custom robot discoverable.
 
-We recommend referencing the example robots in [robots.py](exts/groot.mobility.gen/groot/mobility/gen/robots.py) for more details.
+We recommend referencing the example robots in [robots.py](exts/omni.ext.mobility_gen/omni/ext/mobility_gen/robots.py) for more details.
 
 A good way to start could be simply by modifying an existing robot.  For example, you might change the position at which
 the camera is mounted on the H1 robot.
@@ -330,23 +330,23 @@ the camera is mounted on the H1 robot.
 <a id="how-to-custom-scenario"></a>
 ### How to implement a new scenario
 
-You can implement a new data recording scenario for use with Groot Mobility Gen.
+You can implement a new data recording scenario for use with MobilityGen.
 
 The general workflow is as follows:
 
-1. Subclass the [Scenario](exts/groot.mobility.gen/groot/mobility/gen/scenarios.py) class.
+1. Subclass the [Scenario](exts/omni.ext.mobility_gen/omni/ext/mobility_gen/scenarios.py) class.
 2. Implement the ``reset()`` method.  This method is responsible for randomizing / initializing the scenario (ie: spawning the robot).
 3. Implement the ``step()`` method.  This method is responsible for incrementing the scenario by one physics step.
 4. Register the scenario class by using the ``SCENARIOS.register()`` decorator.  This makes the custom scenario discoverable.
 
-We recommend referencing the example scenarios in [scenarios.py](exts/groot.mobility.gen/groot/mobility/gen/scenarios.py) for more details.
+We recommend referencing the example scenarios in [scenarios.py](exts/omni.ext.mobility_gen/omni/ext/mobility_gen/scenarios.py) for more details.
 
 A good way to start could be simply by modifying an existing scenario.  For example, you might implement a new method
 for generating random motions.
 
 ## 📝 Data Format
 
-Groot Mobility Gen records two types of data.  
+MobilityGen records two types of data.  
 
 - *Static Data* is recorded at the beginning of a recording
     - Occupancy map
@@ -439,7 +439,7 @@ type and the name.  (ie: rgb/robot.front_camera.left.depth_image).
 
 The name of each file corresponds to its physics timestep.
 
-If you have any questions regarding the data logged by Groot Mobility Gen, please [let us know!](https://github.com/NVlabs/NVlabs-GR00T-Gen-MobilityGen/issues)
+If you have any questions regarding the data logged by MobilityGen, please [let us know!](https://github.com/NVlabs/MobilityGen/issues)
 
 ## 👏 Contributing
 

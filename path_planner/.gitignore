@@ -1,5 +1,5 @@
 build
 *.egg-info
-groot_mobility_gen_path_planner/*.so
+mobility_gen_path_planner/*.so
 .pytest_cache
 __pycache__

@@ -6,7 +6,7 @@
 
     // Python modules search paths:
     "python.analysis.extraPaths": [
-        "${workspaceFolder}/source/extensions/groot.mobility.gen",
+        "${workspaceFolder}/source/extensions/omni.ext.mobility_gen",
         "${workspaceFolder}/app/kit/exts/omni.kit.pip_archive/pip_prebundle",
         "${workspaceFolder}/app/kit/kernel/py",
         "${workspaceFolder}/app/kit/plugins/bindings-python",

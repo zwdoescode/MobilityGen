@@ -24,26 +24,26 @@ import glob
 import omni.ext
 import omni.ui as ui
 
-from groot.mobility.gen.utils.global_utils import save_stage
-from groot.mobility.gen.writer import Writer
-from groot.mobility.gen.inputs import GamepadDriver, KeyboardDriver
-from groot.mobility.gen.scenarios import SCENARIOS, Scenario
-from groot.mobility.gen.utils.global_utils import get_world
-from groot.mobility.gen.robots import ROBOTS
-from groot.mobility.gen.config import Config
-from groot.mobility.gen.build import build_scenario_from_config
+from omni.ext.mobility_gen.utils.global_utils import save_stage
+from omni.ext.mobility_gen.writer import Writer
+from omni.ext.mobility_gen.inputs import GamepadDriver, KeyboardDriver
+from omni.ext.mobility_gen.scenarios import SCENARIOS, Scenario
+from omni.ext.mobility_gen.utils.global_utils import get_world
+from omni.ext.mobility_gen.robots import ROBOTS
+from omni.ext.mobility_gen.config import Config
+from omni.ext.mobility_gen.build import build_scenario_from_config
 
 
-if "GROOT_MOBILITY_GEN_DATA" in os.environ:
-    DATA_DIR = os.environ['GROOT_MOBILITY_GEN_DATA']
+if "MOBILITY_GEN_DATA" in os.environ:
+    DATA_DIR = os.environ['MOBILITY_GEN_DATA']
 else:
-    DATA_DIR = os.path.expanduser("~/groot_mobility_gen_data")
+    DATA_DIR = os.path.expanduser("~/MobilityGenData")
 
 RECORDINGS_DIR = os.path.join(DATA_DIR, "recordings")
 SCENARIOS_DIR = os.path.join(DATA_DIR, "scenarios")
 
 
-class GrootMobilityGenExtension(omni.ext.IExt):
+class MobilityGenExtension(omni.ext.IExt):
 
     def on_startup(self, ext_id):
 
@@ -65,13 +65,13 @@ class GrootMobilityGenExtension(omni.ext.IExt):
 
         self._occupancy_map_image_provider = omni.ui.ByteImageProvider()
 
-        self._visualize_window = omni.ui.Window("Occupancy Map", width=300, height=300)
+        self._visualize_window = omni.ui.Window("MobilityGen - Occupancy Map", width=300, height=300)
         with self._visualize_window.frame:
             self._occ_map_frame = ui.Frame()
             self._occ_map_frame.set_build_fn(self.build_occ_map_frame)
             
 
-        self._teleop_window = omni.ui.Window("Groot Mobility Gen", width=300, height=300)
+        self._teleop_window = omni.ui.Window("MobilityGen", width=300, height=300)
 
         with self._teleop_window.frame:
             with ui.VStack():

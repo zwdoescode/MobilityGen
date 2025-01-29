@@ -19,8 +19,8 @@ import numpy as np
 import math
 
 
-from groot.mobility.gen.occupancy_map import OccupancyMap
-from groot.mobility.gen.types import Pose2d, Point2d
+from omni.ext.mobility_gen.occupancy_map import OccupancyMap
+from omni.ext.mobility_gen.types import Pose2d, Point2d
 
 
 class PoseSampler:

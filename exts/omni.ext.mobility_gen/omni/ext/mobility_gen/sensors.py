@@ -21,9 +21,9 @@ from typing import Tuple
 import omni.replicator.core as rep
 
 
-from groot.mobility.gen.utils.global_utils import get_stage
-from groot.mobility.gen.utils.stage_utils import stage_add_usd_ref
-from groot.mobility.gen.common import Module, Buffer
+from omni.ext.mobility_gen.utils.global_utils import get_stage
+from omni.ext.mobility_gen.utils.stage_utils import stage_add_usd_ref
+from omni.ext.mobility_gen.common import Module, Buffer
 
 
 class Sensor(Module):

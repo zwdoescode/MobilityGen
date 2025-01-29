@@ -221,8 +221,8 @@ std::vector<std::pair<int, int>> unroll_path(
     return path;
 }
 
-PYBIND11_MODULE(_groot_mobility_gen_path_planner_C, m) {
-    m.doc() = "Groot Mobility Gen Path Planner C++ Bindings";
+PYBIND11_MODULE(_mobility_gen_path_planner_C, m) {
+    m.doc() = "MobilityGen Path Planner C++ Bindings";
     m.def("generate_paths", &generate_paths, "Generate paths");
     m.def("unroll_path", &unroll_path, "Unroll a path");
 }

@@ -22,7 +22,7 @@ import glob
 import os
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--input_dir", type=str, default="~/groot_mobility_gen_data/replays")
+parser.add_argument("--input_dir", type=str, default="~/MobilityGenData/replays")
 args = parser.parse_args()
 
 directory = os.path.expanduser(args.input_dir)
@@ -92,7 +92,7 @@ def update_step(index: int):
     return context.update(index)
 
     
-with gr.Blocks(title="Groot Mobility Gen", fill_height=True) as demo:
+with gr.Blocks(title="MobilityGen - Data Explorer", fill_height=True) as demo:
     with gr.Column(scale=2):
         with gr.Row(equal_height=False):
             recording_selector = gr.Radio(label=f"{os.path.realpath(args.input_dir)}", choices=recording_names, scale=2)

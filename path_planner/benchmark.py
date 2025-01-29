@@ -19,7 +19,7 @@ import time
 import numpy as np
 import matplotlib.pyplot as plt
 
-from groot_mobility_gen_path_planner import generate_paths
+from mobility_gen_path_planner import generate_paths
 
 
 image = PIL.Image.open("cube_map.png")

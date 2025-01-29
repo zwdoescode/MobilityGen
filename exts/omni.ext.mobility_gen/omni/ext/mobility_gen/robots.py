@@ -31,13 +31,13 @@ from omni.isaac.examples.quadruped.quadruped_example import SpotFlatTerrainPolic
 import omni.isaac.core.utils.numpy.rotations as rot_utils
 
 # Extension imports
-from groot.mobility.gen.common import Buffer, Module
-from groot.mobility.gen.sensors import Sensor, HawkCamera
-from groot.mobility.gen.utils.global_utils import get_stage, get_world
-from groot.mobility.gen.utils.stage_utils import stage_get_prim, stage_add_camera, stage_add_usd_ref
-from groot.mobility.gen.utils.prim_utils import prim_rotate_x, prim_rotate_y, prim_rotate_z, prim_translate
-from groot.mobility.gen.types import Pose2d
-from groot.mobility.gen.utils.registry import Registry
+from omni.ext.mobility_gen.common import Buffer, Module
+from omni.ext.mobility_gen.sensors import Sensor, HawkCamera
+from omni.ext.mobility_gen.utils.global_utils import get_stage, get_world
+from omni.ext.mobility_gen.utils.stage_utils import stage_get_prim, stage_add_camera, stage_add_usd_ref
+from omni.ext.mobility_gen.utils.prim_utils import prim_rotate_x, prim_rotate_y, prim_rotate_z, prim_translate
+from omni.ext.mobility_gen.types import Pose2d
+from omni.ext.mobility_gen.utils.registry import Registry
 
 
 #=========================================================

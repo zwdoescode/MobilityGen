@@ -1,4 +1,4 @@
-# Groot Mobility Gen - Path Planner
+# MobilityGen - Path Planner
 
 This package contains the C++ implementation and Python bindings for an A* path planner.
 
@@ -7,7 +7,7 @@ This package contains the C++ implementation and Python bindings for an A* path 
 To install in Python environment
 
 ```bash
-cd groot_mobility_gen_path_planner
+cd mobility_gen_path_planner
 python -m pip install -e .
 ```
 
@@ -17,7 +17,7 @@ python -m pip install -e .
 Generate paths methods exhaustively plans all paths from a starting point using Dijkstra's algorithm.
 
 ```python
-from groot_mobility_gen_path_planner import generate_paths
+from mobility_gen_path_planner import generate_paths
 
 # Plan all paths connected to start point
 start = (0, 0)

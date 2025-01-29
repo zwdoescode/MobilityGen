@@ -25,10 +25,10 @@ import subprocess
 import glob
 import argparse
 
-if "GROOT_MOBILITY_GEN_DATA" in os.environ:
-    DATA_DIR = os.environ['GROOT_MOBILITY_GEN_DATA']
+if "MOBILITY_GEN_DATA" in os.environ:
+    DATA_DIR = os.environ['MOBILITY_GEN_DATA']
 else:
-    DATA_DIR = os.path.expanduser("~/groot_mobility_gen_data")
+    DATA_DIR = os.path.expanduser("~/MobilityGenData")
 
 if __name__ == "__main__":
 
@@ -63,7 +63,7 @@ if __name__ == "__main__":
             "./app/python.sh",
             "scripts/replay_implementation.py",
             "--ext-folder", "exts",
-            "--enable", "groot.mobility.gen",
+            "--enable", "omni.isaac.mobility_gen",
             "--enable", "omni.isaac.examples",
             "--input_path", recording_path,
             "--output_path", output_path,

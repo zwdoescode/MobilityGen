@@ -25,9 +25,9 @@ import omni.isaac.core.utils.numpy.rotations as rot_utils
 import omni.isaac.core.objects as objects
 
 
-from groot.mobility.gen.utils.global_utils import get_stage
-from groot.mobility.gen.utils.stage_utils import stage_add_dome_light
-from groot.mobility.gen.utils.registry import Registry
+from omni.ext.mobility_gen.utils.global_utils import get_stage
+from omni.ext.mobility_gen.utils.stage_utils import stage_add_dome_light
+from omni.ext.mobility_gen.utils.registry import Registry
 
 
 #=========================================================

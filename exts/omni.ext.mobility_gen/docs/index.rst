@@ -1,4 +1,4 @@
-groot.mobility.gen
+omni.ext.mobility_gen
 #############################
 
 Example of Python only extension
@@ -11,7 +11,7 @@ Example of Python only extension
    CHANGELOG
 
 
-.. automodule::"groot.mobility.gen"
+.. automodule::"omni.ext.mobility_gen"
     :platform: Windows-x86_64, Linux-x86_64
     :members:
     :undoc-members:
