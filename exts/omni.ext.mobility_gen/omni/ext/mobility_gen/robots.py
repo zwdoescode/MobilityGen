@@ -21,14 +21,14 @@ import math
 from typing import List, Type, Tuple, Union
 
 # Isaac Sim Imports
-from omni.isaac.core.prims.xform_prim import XFormPrim
-from omni.isaac.core.robots.robot import Robot as _Robot
-from omni.isaac.core.articulations import ArticulationView as _ArticulationView
-from omni.isaac.wheeled_robots.robots import WheeledRobot as _WheeledRobot
-from omni.isaac.wheeled_robots.controllers.differential_controller import DifferentialController
-from omni.isaac.examples.humanoid.h1 import H1FlatTerrainPolicy
-from omni.isaac.examples.quadruped.quadruped_example import SpotFlatTerrainPolicy
-import omni.isaac.core.utils.numpy.rotations as rot_utils
+from isaacsim.core.prims import XFormPrim
+from isaacsim.core.api.robots.robot import Robot as _Robot
+from isaacsim.core.prims import Articulation as _ArticulationView
+from isaacsim.robot.wheeled_robots.robots import WheeledRobot as _WheeledRobot
+from isaacsim.robot.wheeled_robots.controllers.differential_controller import DifferentialController
+from isaacsim.robot.policy.examples.robots.h1 import H1FlatTerrainPolicy
+from isaacsim.robot.policy.examples.robots import SpotFlatTerrainPolicy
+import isaacsim.core.utils.numpy.rotations as rot_utils
 
 # Extension imports
 from omni.ext.mobility_gen.common import Buffer, Module

@@ -22,8 +22,8 @@ import os
 import tempfile
 import omni.kit.usd
 import typing as tp
-from omni.isaac.occupancy_map.bindings import _occupancy_map
-from omni.isaac.occupancy_map.utils import compute_coordinates,  update_location
+from isaacsim.asset.gen.omap.bindings import _omap as _occupancy_map
+from isaacsim.asset.gen.omap.utils import compute_coordinates,  update_location
 from pxr import Sdf, UsdGeom, UsdPhysics, Usd, UsdShade, Kind
 
 from ..types import Point2d

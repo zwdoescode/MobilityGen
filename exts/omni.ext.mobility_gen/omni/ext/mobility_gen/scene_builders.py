@@ -20,10 +20,8 @@ import math
 import numpy as np
 from typing import Tuple
 
-
-import omni.isaac.core.utils.numpy.rotations as rot_utils
-import omni.isaac.core.objects as objects
-
+import isaacsim.core.utils.numpy.rotations as rot_utils
+import isaacsim.core.api.objects as objects
 
 from omni.ext.mobility_gen.utils.global_utils import get_stage
 from omni.ext.mobility_gen.utils.stage_utils import stage_add_dome_light
