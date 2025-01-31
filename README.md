@@ -441,7 +441,9 @@ The name of each file corresponds to its physics timestep.
 
 If you have any questions regarding the data logged by MobilityGen, please [let us know!](https://github.com/NVlabs/MobilityGen/issues)
 
-## 👏 Contributing
 
+## 👏 Contributing
 This [Developer Certificate of Origin](https://developercertificate.org/) applies to this project.
 
+### Core Contributor
+John Welsh, Huihua Zhao, Vikram Ramasamy Wei Liu, Joydeep Biswas, Yan Chang, Soha Pouya
