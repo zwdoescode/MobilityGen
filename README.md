@@ -446,4 +446,4 @@ If you have any questions regarding the data logged by MobilityGen, please [let 
 This [Developer Certificate of Origin](https://developercertificate.org/) applies to this project.
 
 ### Core Contributor
-John Welsh, Huihua Zhao, Vikram Ramasamy Wei Liu, Joydeep Biswas, Yan Chang, Soha Pouya
+John Welsh, Huihua Zhao, Vikram Ramasamy, Wei Liu, Joydeep Biswas, Soha Pouya, Yan Chang
