@@ -75,7 +75,8 @@ async def occupancy_map_generate_from_prim_async(
 
     app = get_app()
 
-    om = _occupancy_map.acquire_occupancy_map_interface()
+    om = _occupancy_map.acquire_omap_interface()
+    
     timeline = omni.timeline.get_timeline_interface()
 
     await app.next_update_async()
@@ -183,7 +184,7 @@ async def occupancy_map_generate_from_prim_async(
         occupied_thresh=ROS_OCCUPIED_THRESH_DEFAULT
     )
     
-    _occupancy_map.release_occupancy_map_interface(om)
+    _occupancy_map.release_omap_interface(om)
 
     return occupancy_map
 

@@ -21,7 +21,7 @@ import math
 from typing import List, Type, Tuple, Union
 
 # Isaac Sim Imports
-from isaacsim.core.prims import XFormPrim
+from isaacsim.core.prims import SingleXFormPrim as XFormPrim
 from isaacsim.core.api.robots.robot import Robot as _Robot
 from isaacsim.core.prims import Articulation as _ArticulationView
 from isaacsim.robot.wheeled_robots.robots import WheeledRobot as _WheeledRobot
@@ -147,6 +147,7 @@ class Robot(Module):
         # Add camera
         camera_path = os.path.join(prim_path, cls.front_camera_base_path)
         front_camera_xform = XFormPrim(camera_path)
+
         stage = get_stage()
         front_camera_prim = stage_get_prim(stage, camera_path)
         prim_rotate_x(front_camera_prim, cls.front_camera_rotation[0])
@@ -349,7 +350,7 @@ class IsaacLabRobot(Robot):
     def write_action(self, step_size):
         action = self.action.get_value()
         command = np.array([action[0], 0., action[1]])
-        self.controller.advance(step_size, command)
+        self.controller.forward(step_size, command)
 
     def set_pose_2d(self, pose):
         super().set_pose_2d(pose)
