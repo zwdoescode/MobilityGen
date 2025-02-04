@@ -387,19 +387,19 @@ class JetbotRobot(WheeledRobot):
     front_camera_translation = (0., 0., 0.)
     front_camera_type = HawkCamera
 
-    keyboard_linear_velocity_gain: float = 1.0
+    keyboard_linear_velocity_gain: float = 0.25
     keyboard_angular_velocity_gain: float = 1.0
 
-    gamepad_linear_velocity_gain: float = 1.0
+    gamepad_linear_velocity_gain: float = 0.25
     gamepad_angular_velocity_gain: float = 1.0
 
-    random_action_linear_velocity_range: Tuple[float, float] = (-0.3, 1.0)
+    random_action_linear_velocity_range: Tuple[float, float] = (-0.3, 0.25)
     random_action_angular_velocity_range: Tuple[float, float] = (-0.75, 0.75)
-    random_action_linear_acceleration_std: float = 5.0
+    random_action_linear_acceleration_std: float = 1.0
     random_action_angular_acceleration_std: float = 5.0
     random_action_grid_pose_sampler_grid_size: float = 5.0
 
-    path_following_speed: float = 1.0
+    path_following_speed: float = 0.25
     path_following_angular_gain: float = 1.0
     path_following_stop_distance_threshold: float = 0.5
     path_following_forward_angle_threshold = math.pi / 4
@@ -408,9 +408,9 @@ class JetbotRobot(WheeledRobot):
     wheel_dof_names: List[str] = ["left_wheel_joint", "right_wheel_joint"]
     usd_url: str = "http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/4.2/Isaac/Robots/Jetbot/jetbot.usd"
     chassis_subpath: str = "chassis"
-    wheel_radius: float = 0.1125
-    wheel_base: float = 0.03
-
+    wheel_base: float = 0.1125
+    wheel_radius: float = 0.03
+    
 
 @ROBOTS.register()
 class CarterRobot(WheeledRobot):
