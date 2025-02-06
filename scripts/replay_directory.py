@@ -72,7 +72,7 @@ if __name__ == "__main__":
                 "scripts/replay_implementation.py",
                 "--ext-folder", "exts",
                 "--enable", "omni.ext.mobility_gen",
-                "--enable", "omni.isaac.examples",
+                "--enable", "isaacsim.asset.gen.omap",
                 "--input_path", recording_path,
                 "--output_path", output_path,
                 "--render_interval", str(args.render_interval),

@@ -56,6 +56,7 @@ To get started with MobilityGen follow the setup and usage instructions below!
     - [How to implement a custom scenario](#how-to-custom-scenario)
 - [📝 Data Format](#-data-format)
 - [👏 Contributing](#-contributing)
+- 
 
 <a id="setup"></a>
 ## 🛠️ Setup
@@ -64,7 +65,9 @@ Follow these steps to set up MobilityGen
 
 ### Step 1 - Install Isaac Sim
 
-1. Using the ``Omniverse Launcher`` install ``Isaac Sim 4.2.0``
+1. Download [Isaac Sim 4.5.0](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/download.html)
+
+    > We'll assume you use the zip file and extract it to ``~/isaacsim``.
 
 ### Step 2 - Clone this repository
 
@@ -86,25 +89,31 @@ Next, we'll call ``link_app.sh`` to link the Isaac Sim installation directory to
     cd MobilityGen
     ```
 
-2. Run the following to link the ``app`` folder
+2. Run the following to link the ``app`` folder and pass it the path to where you installed Isaac Sim
 
     ```bash
-    ./link_app.sh
+    ./link_app.sh --path ~/isaacsim
     ```
 
 <details>
 > This step is helpful as it (1) Enables us to use VS code autocompletion (2) Allows us to call ./app/python.sh to launch Isaac Sim Python scripts (3) Allows us to call ./app/isaac-sim.sh to launch Isaac Sim.
 </details>
 
-### Step 4 - Install the C++ path planner (for procedural generation)
+### Step 4 - Install other python dependencies (including C++ path planner) (for procedural generation) 
 
-1. Navigate to the path planner directory
+1. Install miscellaneous python dependencies
+
+    ```bash
+    ./app/python.sh -m pip install tqdm
+    ```
+
+2. Navigate to the path planner directory
 
     ```bash
     cd MobilityGen/path_planner
     ```
 
-2. Install with pip using the Isaac Sim python interpreter
+3. Install with pip using the Isaac Sim python interpreter
 
     ```bash
     ../app/python.sh -m pip install -e .

@@ -15,10 +15,10 @@
 
 
 import omni.kit
-import omni.isaac.core
+import isaacsim.core
 from pxr import Usd
 
-from omni.isaac.core_nodes.bindings import _omni_isaac_core_nodes
+from isaacsim.core.nodes.bindings import _isaacsim_core_nodes
 from omni.kit.viewport.utility import get_active_viewport
 from .stage_utils import stage_get_prim
 
@@ -38,20 +38,20 @@ def new_stage() -> Usd.Stage:
     return stage
 
 
-def new_world(physics_dt: float = 0.01, stage_units_in_meters: float = 1.0) -> omni.isaac.core.World:
+def new_world(physics_dt: float = 0.01, stage_units_in_meters: float = 1.0) -> isaacsim.core.api.World:
     world = get_world()
     if world is not None:
-        omni.isaac.core.World.clear_instance()
-    omni.isaac.core.World(physics_dt=physics_dt, stage_units_in_meters=stage_units_in_meters)
-    return omni.isaac.core.World.instance()
+        isaacsim.core.api.World.clear_instance()
+    isaacsim.core.api.World(physics_dt=physics_dt, stage_units_in_meters=stage_units_in_meters)
+    return isaacsim.core.api.World.instance()
 
 
-def get_world() -> omni.isaac.core.World:
-    return omni.isaac.core.World.instance()
+def get_world() -> isaacsim.core.api.World:
+    return isaacsim.core.api.World.instance()
 
 
 def get_timestamp():
-    return _omni_isaac_core_nodes.acquire_interface().get_sim_time_monotonic()
+    return _isaacsim_core_nodes.acquire_interface().get_sim_time_monotonic()
 
 
 def save_stage(path: str, default_prim: str | None = None):

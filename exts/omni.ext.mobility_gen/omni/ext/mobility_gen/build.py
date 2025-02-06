@@ -15,10 +15,10 @@
 
 import os
 
-import omni.isaac.core.utils.prims as prim_utils
-from omni.isaac.core.utils.stage import open_stage
-import omni.isaac.core.objects as objects
-from omni.isaac.core.utils.stage import add_reference_to_stage
+import isaacsim.core.utils.prims as prim_utils
+from isaacsim.core.utils.stage import open_stage
+import isaacsim.core.api.objects as objects
+from isaacsim.core.utils.stage import add_reference_to_stage
 
 
 from omni.ext.mobility_gen.occupancy_map import OccupancyMap

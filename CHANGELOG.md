@@ -2,6 +2,15 @@
 
 # main
 
+# ref-4.5
+
+Release targeting Isaac Sim 4.5
+
+- Updated to use isaacsim.* rather than omni.* import calls
+- Added minor fixes to API discrepancies
+- Added required extension loading for replay rendering
+- Updated README to include setup instructions for Isaac Sim 4.5
+
 # ref-4.2
 
 Release targeting Isaac Sim 4.2
