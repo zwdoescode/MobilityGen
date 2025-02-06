@@ -15,7 +15,7 @@ Read below to learn more.
 
 ## Overview
 
-MobilityGen is a toolset built on [NVIDIA Isaac Sim](https://developer.nvidia.com/isaac/sim) that enables you to easily collect data for mobile robots.  
+MobilityGen is a toolset built on [NVIDIA Isaac Sim](https://developer.nvidia.com/isaac/sim) that enables you to easily generate and collect data for mobile robots.  
 
 It supports
 
