@@ -19,6 +19,7 @@ from typing import Tuple
 
 
 import omni.replicator.core as rep
+from isaacsim.core.prims import SingleXFormPrim as XFormPrim
 
 
 from omni.ext.mobility_gen.utils.global_utils import get_stage
@@ -48,11 +49,14 @@ class Camera(Sensor):
         self._rgb_annotator = None
         self._segmentation_annotator = None
         self._depth_annotator = None
+        self._xform_prim = XFormPrim(self._prim_path)
 
         self.rgb_image = Buffer(tags=["rgb"])
         self.segmentation_image = Buffer(tags=["segmentation"])
         self.segmentation_info = Buffer()
         self.depth_image = Buffer(tags=["depth"])
+        self.position = Buffer()
+        self.orientation = Buffer()
 
     def enable_rendering(self):
         
@@ -126,6 +130,11 @@ class Camera(Sensor):
             self.depth_image.set_value(
                 self._depth_annotator.get_data()
             )
+
+        position, orientation = self._xform_prim.get_world_pose()
+        self.position.set_value(position)
+        self.orientation.set_value(orientation)
+        
         super().update_state()
 
 
