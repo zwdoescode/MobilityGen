@@ -2,6 +2,8 @@
 
 # main
 
+- Added camera world pose to state
+
 # ref-4.5
 
 Release targeting Isaac Sim 4.5
