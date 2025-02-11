@@ -398,6 +398,8 @@ The state_dict has the following schema
     "robot.front_camera.left.depth_image": np.ndarray,               # [HxW], np.fp32 - Depth in meters
     "robot.front_camera.left.segmentation_image": np.ndarray,        # [HxW], np.uint8 - Segmentation class index
     "robot.front_camera.left.segmentation_info": dict,               # see Isaac replicator segmentation info format
+    "robot.front_camera.left.position": np.ndarray,                  # [3] - XYZ camera world position
+    "robot.front_camera.left.orientation": np.ndarray,               # [4] - Quaternion camera world orientation
     ...
 }
 ```
