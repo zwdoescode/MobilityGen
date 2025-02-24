@@ -72,6 +72,15 @@ class Writer:
 
                 image.save(output_path)
 
+    def write_state_dict_normals(self, state_np: dict, step: int):
+        for name, value in state_np.items():
+            if value is not None:
+                output_folder = os.path.join(self.path, "state", "normals", name)
+                if not os.path.exists(output_folder):
+                    os.makedirs(output_folder)
+                output_path = os.path.join(output_folder, f"{step:08d}.npy")
+                np.save(output_path, value)
+
     def write_stage(self):
         if not os.path.exists(self.path):
             os.makedirs(self.path)

@@ -39,6 +39,7 @@ if __name__ == "__main__":
     parser.add_argument("--segmentation_enabled", type=bool, default=True)
     parser.add_argument("--depth_enabled", type=bool, default=True)
     parser.add_argument("--instance_id_segmentation_enabled", type=bool, default=True)
+    parser.add_argument("--normals_enabled", type=bool, default=False)
     parser.add_argument("--render_rt_subframes", type=int, default=1)
     parser.add_argument("--render_interval", type=int, default=1)
     args = parser.parse_args()
@@ -74,5 +75,6 @@ if __name__ == "__main__":
             "--rgb_enabled", str(args.rgb_enabled),
             "--segmentation_enabled", str(args.segmentation_enabled),
             "--instance_id_segmentation_enabled", str(args.instance_id_segmentation_enabled),
+            "--normals_enabled", str(args.normals_enabled),
             "--depth_enabled", str(args.depth_enabled)
         ])

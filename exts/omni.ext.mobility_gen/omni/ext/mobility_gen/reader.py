@@ -40,10 +40,12 @@ class Reader:
         self.rgb_folders = glob.glob(os.path.join(self.recording_path, "state", "rgb", "*"))
         self.segmentation_folders = glob.glob(os.path.join(self.recording_path, "state", "segmentation", "*"))
         self.depth_folders = glob.glob(os.path.join(self.recording_path, "state", "depth", "*"))
+        self.normals_folders = glob.glob(os.path.join(self.recording_path, "state", "normals", "*"))
 
         self.rgb_names = [os.path.basename(folder) for folder in self.rgb_folders]
         self.segmentation_names = [os.path.basename(folder) for folder in self.segmentation_folders]
         self.depth_names = [os.path.basename(folder) for folder in self.depth_folders]
+        self.normals_names = [os.path.basename(folder) for folder in self.normals_folders]
 
     def read_config(self) -> Config:
         with open(os.path.join(self.recording_path, "config.json"), 'r') as f:
@@ -70,6 +72,13 @@ class Reader:
         image = PIL.Image.open(os.path.join(self.recording_path, "state", "segmentation", name, f"{step:08d}.png"))
         return np.asarray(image)
     
+    def read_normals(self, name: str, index: int):
+        step = self.steps[index]
+        data = np.load(
+            os.path.join(self.recording_path, "state", "normals", name, f"{step:08d}.npy")
+        )
+        return data
+
     def read_state_dict_segmentation(self, index: int):
         segmentation_dict = OrderedDict()
         for name in self.segmentation_names:
@@ -90,6 +99,13 @@ class Reader:
             depth_dict[name] = data
         return depth_dict
 
+    def read_state_dict_normals(self, index: int):
+        normals_dict = OrderedDict()
+        for name in self.normals_names:
+            data = self.read_normals(name, index)
+            normals_dict[name] = data
+        return normals_dict
+
     def read_state_dict_common(self, index: int):
         step = self.steps[index]
         state_dict = np.load(os.path.join(self.recording_path, "state", "common", f"{step:08d}.npy"), allow_pickle=True).item()
@@ -101,12 +117,14 @@ class Reader:
         rgb_dict = self.read_state_dict_rgb(index)
         segmentation_dict = self.read_state_dict_segmentation(index)
         depth_dict = self.read_state_dict_depth(index)
+        normals_dict = self.read_state_dict_normals(index)
 
         full_dict = OrderedDict()
         full_dict.update(state_dict)
         full_dict.update(rgb_dict)
         full_dict.update(segmentation_dict)
         full_dict.update(depth_dict)
+        full_dict.update(normals_dict)
 
         return full_dict
     

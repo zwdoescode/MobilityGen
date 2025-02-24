@@ -49,6 +49,7 @@ class Camera(Sensor):
         self._rgb_annotator = None
         self._segmentation_annotator = None
         self._instance_id_segmentation_annotator = None
+        self._normals_annotator = None
         self._depth_annotator = None
         self._xform_prim = XFormPrim(self._prim_path)
 
@@ -58,6 +59,7 @@ class Camera(Sensor):
         self.depth_image = Buffer(tags=["depth"])
         self.instance_id_segmentation_image = Buffer(tags=["segmentation"])
         self.instance_id_segmentation_info = Buffer()
+        self.normals_image = Buffer(tags=['normals'])
         self.position = Buffer()
         self.orientation = Buffer()
 
@@ -126,6 +128,16 @@ class Camera(Sensor):
         )
         self._depth_annotator.attach(self._render_product)
 
+    def enable_normals_rendering(self):
+        if self._render_product is None:
+            self.enable_rendering()
+        if self._normals_annotator is not None:
+            return
+        self._normals_annotator = rep.AnnotatorRegistry.get_annotator(
+            "normals"
+        )
+        self._normals_annotator.attach(self._render_product)
+
     def update_state(self):
         if self._rgb_annotator is not None:
             self.rgb_image.set_value(
@@ -150,6 +162,10 @@ class Camera(Sensor):
             self.instance_id_segmentation_image.set_value(id_seg_image)
             self.instance_id_segmentation_info.set_value(id_seg_info)
 
+        if self._normals_annotator is not None:
+            data = self._normals_annotator.get_data()
+            self.normals_image.set_value(data)
+            
         position, orientation = self._xform_prim.get_world_pose()
         self.position.set_value(position)
         self.orientation.set_value(orientation)
