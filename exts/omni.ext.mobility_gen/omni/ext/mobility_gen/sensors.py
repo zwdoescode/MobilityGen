@@ -48,6 +48,7 @@ class Camera(Sensor):
         self._render_product = None
         self._rgb_annotator = None
         self._segmentation_annotator = None
+        self._instance_id_segmentation_annotator = None
         self._depth_annotator = None
         self._xform_prim = XFormPrim(self._prim_path)
 
@@ -55,6 +56,8 @@ class Camera(Sensor):
         self.segmentation_image = Buffer(tags=["segmentation"])
         self.segmentation_info = Buffer()
         self.depth_image = Buffer(tags=["depth"])
+        self.instance_id_segmentation_image = Buffer(tags=["segmentation"])
+        self.instance_id_segmentation_info = Buffer()
         self.position = Buffer()
         self.orientation = Buffer()
 
@@ -103,6 +106,16 @@ class Camera(Sensor):
         )
         self._segmentation_annotator.attach(self._render_product)
 
+    def enable_instance_id_segmentation_rendering(self):
+        if self._render_product is None:
+            self.enable_rendering()
+        if self._instance_id_segmentation_annotator is not None:
+            return
+        self._instance_id_segmentation_annotator = rep.AnnotatorRegistry.get_annotator(
+            "instance_id_segmentation", init_params=dict(colorize=False)
+        )
+        self._instance_id_segmentation_annotator.attach(self._render_product)
+
     def enable_depth_rendering(self):
         if self._render_product is None:
             self.enable_rendering()
@@ -122,7 +135,6 @@ class Camera(Sensor):
             data = self._segmentation_annotator.get_data()
             seg_image = data['data']
             seg_info = data['info']
-
             self.segmentation_image.set_value(seg_image)
             self.segmentation_info.set_value(seg_info)
 
@@ -130,6 +142,13 @@ class Camera(Sensor):
             self.depth_image.set_value(
                 self._depth_annotator.get_data()
             )
+
+        if self._instance_id_segmentation_annotator is not None:
+            data = self._instance_id_segmentation_annotator.get_data()
+            id_seg_image = data['data']
+            id_seg_info = data['info']
+            self.instance_id_segmentation_image.set_value(id_seg_image)
+            self.instance_id_segmentation_info.set_value(id_seg_info)
 
         position, orientation = self._xform_prim.get_world_pose()
         self.position.set_value(position)

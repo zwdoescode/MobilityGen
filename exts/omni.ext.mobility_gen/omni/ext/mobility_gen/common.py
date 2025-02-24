@@ -256,6 +256,17 @@ class Module:
         for child in self.children().values():
             child.enable_depth_rendering()
 
+
+    def enable_instance_id_segmentation_rendering(self):
+        """Enable instance ID segmentation rendering for this module.
+
+        This class only needs to be overwritten for Camera implementations, which
+        perform the logic of enabling rendering.  By default, this method
+        traverses all child modules to enable rendering.
+        """
+        for child in self.children().values():
+            child.enable_instance_id_segmentation_rendering()
+
     def write_replay_data(self):
         """Write module state to Isaac Sim for replay
 
