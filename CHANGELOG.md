@@ -2,6 +2,7 @@
 
 # main
 
+- Added support for instance ID segmentation rendering
 - Added camera world pose to state
 
 # ref-4.5
