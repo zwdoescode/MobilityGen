@@ -2,6 +2,8 @@
 
 # main
 
+- Added support for surface normals image in replay rendering
+- Added support for instance ID segmentation rendering
 - Added camera world pose to state
 
 # ref-4.5

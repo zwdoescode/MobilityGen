@@ -14,42 +14,48 @@
 # limitations under the License.
 
 
-import subprocess
+import cv2
+from pathlib import Path
 import argparse
-import glob
-import os
-import tempfile
-import shutil
 
-parser = argparse.ArgumentParser()
-parser.add_argument("folder")
-parser.add_argument("output_path")
-parser.add_argument("--interval", type=int, default=1)
+def main():
+    parser = argparse.ArgumentParser(description='Convert image sequence to video')
+    parser.add_argument('input_dir', type=str, help='Directory containing image files')
+    parser.add_argument('output_path', type=str, help='Output video path (e.g., output.mp4)')
+    parser.add_argument('--fps', type=int, default=30, help='Frames per second')
+    parser.add_argument('--format', type=str, default='png', choices=['png', 'jpg'], 
+                       help='Image format to process (png or jpg)')
+    args = parser.parse_args()
 
-args = parser.parse_args()
+    # Get sorted list of image files
+    input_dir = Path(args.input_dir)
+    if args.format.lower() == 'jpg':
+        image_files = sorted(list(input_dir.glob('*.jpg')))
+    else:
+        image_files = sorted(list(input_dir.glob('*.png')))
+    
+    if not image_files:
+        raise ValueError(f"No {args.format.upper()} files found in {input_dir}")
 
-images = glob.glob(os.path.join(args.folder, "*.jpg"))
+    # Read first image to get dimensions
+    first_img = cv2.imread(str(image_files[0]))
+    height, width = first_img.shape[:2]
 
-output_dir = tempfile.mkdtemp()
+    # Initialize video writer
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    out = cv2.VideoWriter(args.output_path, fourcc, args.fps, (width, height))
 
-print("Writing selected frames to temp dir")
-for path in images:
-    frame_index = int(os.path.basename(path).split('.')[0])
+    # Process each frame
+    for image_file in image_files:
+        # Read image
+        frame = cv2.imread(str(image_file))
+        
+        # Write frame to video
+        out.write(frame)
 
-    output_path = os.path.join(output_dir, f"{frame_index // args.interval:08d}.jpg")
+    # Release video writer
+    out.release()
+    print(f"Video saved to {args.output_path}")
 
-    shutil.copyfile(path, output_path)
-
-print("Converting to mp4")
-subprocess.call([
-    "ffmpeg",
-    "-framerate",
-    "30",
-    "-i",
-    f"{output_dir}/%08d.jpg",
-    "-c:v",
-    "libx264",
-    "-pix_fmt",
-    "yuv420p",
-    args.output_path
-])
+if __name__ == "__main__":
+    main()

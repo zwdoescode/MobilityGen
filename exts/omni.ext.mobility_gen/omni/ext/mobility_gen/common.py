@@ -191,8 +191,8 @@ class Module:
         Returns:
             _type_: The module's state dictionary, including only common types.
         """
-        return self.state_dict(prefix, exclude_tags=["rgb", "segmentation", "depth"])
-    
+        return self.state_dict(prefix, exclude_tags=["rgb", "segmentation", "depth", "normals"])
+
     def state_dict_rgb(self, prefix: str = ""):
         """Get the state dictionary, including only values tagged "rgb"
 
@@ -226,6 +226,17 @@ class Module:
         """
         return self.state_dict(prefix, include_tags=["depth"])
 
+    def state_dict_normals(self, prefix: str = ""):
+        """Get the state dictionary, including only values tagged "normals"
+
+        Args:
+            prefix (str, optional): A prefix for state value names. Defaults to "".
+
+        Returns:
+            _type_: The module's state dictionary, including only values tagged "normals".
+        """
+        return self.state_dict(prefix, include_tags=["normals"])
+
     def enable_rgb_rendering(self):
         """Enable RGB rendering for this module.
 
@@ -255,6 +266,26 @@ class Module:
         """
         for child in self.children().values():
             child.enable_depth_rendering()
+
+    def enable_instance_id_segmentation_rendering(self):
+        """Enable instance ID segmentation rendering for this module.
+
+        This class only needs to be overwritten for Camera implementations, which
+        perform the logic of enabling rendering.  By default, this method
+        traverses all child modules to enable rendering.
+        """
+        for child in self.children().values():
+            child.enable_instance_id_segmentation_rendering()
+
+    def enable_normals_rendering(self):
+        """Enable normals rendering for this module.
+
+        This class only needs to be overwritten for Camera implementations, which
+        perform the logic of enabling rendering.  By default, this method
+        traverses all child modules to enable rendering.
+        """
+        for child in self.children().values():
+            child.enable_normals_rendering()
 
     def write_replay_data(self):
         """Write module state to Isaac Sim for replay

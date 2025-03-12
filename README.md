@@ -21,12 +21,16 @@ It supports
 
 - ***Rich ground truth data***
 
+    https://github.com/user-attachments/assets/5e2c87c0-4255-4cdf-812e-104a43dd2f3c
+
     - Occupancy Map
     - Pose
     - Joint Positions / Velocities
     - RGB Images
     - Segmentation Images
     - Depth Images
+    - Instance Segmentation Images
+    - Normals Images
     - *If you're interested in more, [let us know!](https://github.com/NVlabs/MobilityGen/issues)*
 
 - ***Many robot types*** 
@@ -228,7 +232,7 @@ Rendering the sensor data is done offline.  To do this call the following
     > Note: For speed for this tutorial, we use a render interval of 200.  If our physics timestep is 200 FPS, this means we 
     > render 1 image per second.
 
-That's it! Now the data with renderings should be stored in ``~/MobilityGenData/replays``
+That's it! Now the data with renderings should be stored in ``~/MobilityGenData/replays``.
 
 ### Step 7 - Visualize the Data
 
@@ -373,6 +377,8 @@ MobilityGen records two types of data.
         - Depth image
         - RGB Image
         - Segmentation image / info
+        - Instance Segmentation
+        - Normals
 
 This data can easily be read using the [Reader](./examples/reader.py) class.
 
@@ -442,6 +448,12 @@ In case you're interested, each recording is represented as a directory with the
                 ...
             robot.front_camera.right.segmentation_image/
                 ...
+        normals/
+            robot.front_camera.left.normals_image\
+                00000000.npy
+                00000001.npy
+                ...
+
 ```
 
 Most of the state information is captured under the ``state/common`` folder, as dictionary in a single ``.npy`` file.

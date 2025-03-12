@@ -20,23 +20,42 @@ from reader import Reader
 
 parser = argparse.ArgumentParser()
 parser.add_argument("recording_path")
+parser.add_argument("--normals_enabled", type=bool, default=False)
 args = parser.parse_args()
 
 reader = Reader(recording_path=args.recording_path)
 
-images = reader.read_state_dict(index=20)
+images = reader.read_state_dict(index=0)
 
-plt.subplot(221)
+nrows = 3
+if args.normals_enabled:
+    nrows += 1
+
+plt.subplot(nrows, 2, 1)
 plt.title('left rgb')
 plt.imshow(images['robot.front_camera.left.rgb_image'])
-plt.subplot(222)
+plt.subplot(nrows, 2, 2)
 plt.title('right rgb')
 plt.imshow(images['robot.front_camera.right.rgb_image'])
-plt.subplot(223)
+plt.subplot(nrows, 2, 3)
 plt.title('left depth (inverse)')
 plt.imshow(1.0 / images['robot.front_camera.left.depth_image'])
-plt.subplot(224)
+plt.subplot(nrows, 2, 4)
 plt.title('right depth (inverse)')
 plt.imshow(1.0 / images['robot.front_camera.right.depth_image'])
+plt.subplot(nrows, 2, 5)
+plt.title('left instance id')
+plt.imshow(images['robot.front_camera.left.instance_id_segmentation_image'])
+plt.subplot(nrows, 2, 6)
+plt.title('right instance id')
+plt.imshow(images['robot.front_camera.right.instance_id_segmentation_image'])
+
+if args.normals_enabled:
+    plt.subplot(nrows, 2, 7)
+    plt.title('left instance id')
+    plt.imshow(images['robot.front_camera.left.normals_image'])
+    plt.subplot(nrows, 2, 8)
+    plt.title('right instance id')
+    plt.imshow(images['robot.front_camera.right.normals_image'])
 plt.show()
     
