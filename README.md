@@ -21,8 +21,8 @@ It supports
 
 - ***Rich ground truth data***
 
-    <video src="assets/rendered_data.mp4" width="320px"></video>
-    
+    https://github.com/user-attachments/assets/5e2c87c0-4255-4cdf-812e-104a43dd2f3c
+
     - Occupancy Map
     - Pose
     - Joint Positions / Velocities
