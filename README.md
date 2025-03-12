@@ -6,10 +6,7 @@ allows you to easily collect data for mobile robots.
 <br></br>
 <div>
 <img src="assets/robots.png" width="640px"/>
-<div style="inline-block">
-<img src="assets/gmg_screencast_scale.GIF" width="320px"/>
-<video src="assets/rendered_data.mp4" width="320px">
-</div>
+<img src="assets/gmg_screencast_scale.GIF" width="640px"/>
 </div>
 
 Read below to learn more.
@@ -24,6 +21,8 @@ It supports
 
 - ***Rich ground truth data***
 
+    <video src="assets/rendered_data.mp4" width="320px"></video>
+    
     - Occupancy Map
     - Pose
     - Joint Positions / Velocities
