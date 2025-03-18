@@ -46,6 +46,7 @@ for index in tqdm.tqdm(range(len(reader))):
     state_common = reader.read_state_dict_common(index=index)
     state_common.update(reader.read_state_dict_depth(index=index))
     state_common.update(reader.read_state_dict_segmentation(index=index))
+    # TODO: handle normals
     
     for k, v in state_common.items():
         if isinstance(v, np.ndarray):
