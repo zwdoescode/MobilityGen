@@ -7,9 +7,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument("parquet_path")
 args = parser.parse_args()
 
-data = pandas.read_parquet(args.parquet_path, engine="pyarrow", columns=["robot.linear_velocity"])
+data = pandas.read_parquet(args.parquet_path, engine="pyarrow")
 
 
+print(data.columns)
 vel = np.stack(data['robot.linear_velocity'].to_numpy())
 
 
