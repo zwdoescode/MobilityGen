@@ -58,8 +58,7 @@ async def build_scenario_from_config(config: Config):
     world = new_world(physics_dt=robot_type.physics_dt)
     await world.initialize_simulation_context_async()
     add_reference_to_stage(config.scene_usd,"/World/scene")
-    objects.GroundPlane("/World/ground_plane", visible=False)
-    robot = robot_type.build("/World/robot")
+    # open_stage(config.scene_usd)
 
     if config.occupancy_map_config.prim_path is not None:
 
@@ -81,6 +80,9 @@ async def build_scenario_from_config(config: Config):
         cell_size=config.occupancy_map_config.cell_size
     )
 
+    objects.GroundPlane("/World/ground_plane", visible=False)
+    robot = robot_type.build("/World/robot")
+    
     chase_camera_path = robot.build_chase_camera()
     set_viewport_camera(chase_camera_path)
     scenario = scenario_type.from_robot_occupancy_map(robot, occupancy_map)
