@@ -5,8 +5,7 @@ from dataclasses import dataclass, asdict
 
 @dataclass
 class OccupancyMapConfig:
-    z_min: Optional[float] = None
-    z_max: Optional[float] = None
+    prim_path: Optional[str] = None
     cell_size: Optional[float] = None
     origin: Optional[Tuple[float, float, float]] = None
     lower_bound: Optional[Tuple[float, float, float]] = None

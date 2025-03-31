@@ -61,27 +61,12 @@ async def build_scenario_from_config(config: Config):
     objects.GroundPlane("/World/ground_plane", visible=False)
     robot = robot_type.build("/World/robot")
 
-
-    if config.occupancy_map_config is None:
-        config.occupancy_map_config = OccupancyMapConfig()
-
-    if config.occupancy_map_config.z_min is None:
-        config.occupancy_map_config.z_min = robot.occupancy_map_z_min
-    
-    if config.occupancy_map_config.z_max is None:
-        config.occupancy_map_config.z_max = robot.occupancy_map_z_max
-
-    if config.occupancy_map_config.cell_size is None:
-        config.occupancy_map_config.cell_size = robot.occupancy_map_cell_size
-
-    if config.occupancy_map_config.origin is None \
-            or config.occupancy_map_config.lower_bound is None \
-            or config.occupancy_map_config.upper_bound is None:
+    if config.occupancy_map_config.prim_path is not None:
 
         origin, lower_bound, upper_bound = compute_occupancy_bounds_from_prim_path(
-            prim_path="/World/scene",
-            z_min=config.occupancy_map_config.z_min,
-            z_max=config.occupancy_map_config.z_max,
+            prim_path=config.occupancy_map_config.prim_path,
+            z_min=config.occupancy_map_config.lower_bound[2],
+            z_max=config.occupancy_map_config.upper_bound[2],
             cell_size=config.occupancy_map_config.cell_size
         )
         config.occupancy_map_config.origin = origin
@@ -99,4 +84,4 @@ async def build_scenario_from_config(config: Config):
     chase_camera_path = robot.build_chase_camera()
     set_viewport_camera(chase_camera_path)
     scenario = scenario_type.from_robot_occupancy_map(robot, occupancy_map)
-    return scenario
+    return scenario, config

@@ -24,13 +24,23 @@ import glob
 import omni.ext
 import omni.ui as ui
 
+from isaacsim.gui.components.ui_utils import (
+    btn_builder,
+    cb_builder,
+    color_picker_builder,
+    dropdown_builder,
+    float_builder,
+    multi_btn_builder,
+    xyz_builder,
+)
+
 from omni.ext.mobility_gen.utils.global_utils import save_stage
 from omni.ext.mobility_gen.writer import Writer
 from omni.ext.mobility_gen.inputs import GamepadDriver, KeyboardDriver
 from omni.ext.mobility_gen.scenarios import SCENARIOS, Scenario
 from omni.ext.mobility_gen.utils.global_utils import get_world
 from omni.ext.mobility_gen.robots import ROBOTS
-from omni.ext.mobility_gen.config import Config
+from omni.ext.mobility_gen.config import Config, OccupancyMapConfig
 from omni.ext.mobility_gen.build import build_scenario_from_config
 
 
@@ -88,7 +98,17 @@ class MobilityGenExtension(omni.ext.IExt):
                     with ui.HStack():
                         ui.Label("Robot Type")
                         self.robot_combo_box = ui.ComboBox(0, *ROBOTS.names())
-                
+
+                    with ui.VStack():
+                        self._omap_override = cb_builder(
+                            "Manual occupancy bounds",
+                            tooltip="If true, use manually specified occupancy map bounds",
+                            default_val=False
+                        )
+                        self._omap_origin = xyz_builder(label="Origin")
+                        self._omap_lower_bound = xyz_builder(label="Lower Bound")
+                        self._omap_upper_bound = xyz_builder(label="Upper Bound")
+                        
                     ui.Button("Build", clicked_fn=self.build_scenario)
 
                 with ui.VStack():
@@ -198,6 +218,43 @@ class MobilityGenExtension(omni.ext.IExt):
                 if self.step % 15 == 0:
                     self.recording_step_label.text = f"Current recording duration: {self.recording_time:.2f}s"
 
+    def get_omap_config(self, robot_type):
+        z_min = robot_type.occupancy_map_z_min
+        z_max = robot_type.occupancy_map_z_max
+        cell_size = robot_type.occupancy_map_cell_size
+        omap_config = OccupancyMapConfig(
+            origin=(
+                self._omap_origin[0].get_value_as_float(),
+                self._omap_origin[1].get_value_as_float(),
+                0.
+            ),
+            lower_bound=(
+                self._omap_lower_bound[0].get_value_as_float(),
+                self._omap_lower_bound[1].get_value_as_float(),
+                z_min
+            ),
+            upper_bound=(
+                self._omap_upper_bound[0].get_value_as_float(),
+                self._omap_upper_bound[1].get_value_as_float(),
+                z_max
+            ),
+            cell_size=cell_size
+        )
+
+        if not self._omap_override.get_value_as_bool():
+            omap_config.prim_path = "/World/scene"
+
+        return omap_config
+    
+    def update_ui_from_config(self):
+        omap_cfg: OccupancyMapConfig = self.config.occupancy_map_config
+        for i in range(3):
+            self._omap_origin[i].set_value(omap_cfg.origin[i])
+        for i in range(3):
+            self._omap_lower_bound[i].set_value(omap_cfg.lower_bound[i])
+        for i in range(3):
+            self._omap_upper_bound[i].set_value(omap_cfg.upper_bound[i])
+
     def build_scenario(self):
 
         async def _build_scenario_async():
@@ -206,9 +263,12 @@ class MobilityGenExtension(omni.ext.IExt):
             self.clear_scenario()
 
             config = self.create_config()
+            robot_type = ROBOTS.get(config.robot_type)
+            config.occupancy_map_config = self.get_omap_config(robot_type)
 
-            self.config = config
-            self.scenario = await build_scenario_from_config(config)
+            self.scenario, self.config = await build_scenario_from_config(config)
+
+            self.update_ui_from_config()
 
             self.draw_occ_map()
             
