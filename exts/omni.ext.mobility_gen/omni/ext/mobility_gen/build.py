@@ -22,8 +22,8 @@ from isaacsim.core.utils.stage import add_reference_to_stage
 
 
 from omni.ext.mobility_gen.occupancy_map import OccupancyMap
-from omni.ext.mobility_gen.config import Config
-from omni.ext.mobility_gen.utils.occupancy_map_utils import occupancy_map_generate_from_prim_async
+from omni.ext.mobility_gen.config import Config, OccupancyMapConfig
+from omni.ext.mobility_gen.utils.occupancy_map_utils import occupancy_map_generate_from_prim_async, compute_occupancy_bounds_from_prim_path
 from omni.ext.mobility_gen.utils.global_utils import new_stage, new_world, set_viewport_camera
 from omni.ext.mobility_gen.scenarios import Scenario, SCENARIOS
 from omni.ext.mobility_gen.robots import ROBOTS
@@ -60,12 +60,42 @@ async def build_scenario_from_config(config: Config):
     add_reference_to_stage(config.scene_usd,"/World/scene")
     objects.GroundPlane("/World/ground_plane", visible=False)
     robot = robot_type.build("/World/robot")
+
+
+    if config.occupancy_map_config is None:
+        config.occupancy_map_config = OccupancyMapConfig()
+
+    if config.occupancy_map_config.z_min is None:
+        config.occupancy_map_config.z_min = robot.occupancy_map_z_min
+    
+    if config.occupancy_map_config.z_max is None:
+        config.occupancy_map_config.z_max = robot.occupancy_map_z_max
+
+    if config.occupancy_map_config.cell_size is None:
+        config.occupancy_map_config.cell_size = robot.occupancy_map_cell_size
+
+    if config.occupancy_map_config.origin is None \
+            or config.occupancy_map_config.lower_bound is None \
+            or config.occupancy_map_config.upper_bound is None:
+
+        origin, lower_bound, upper_bound = compute_occupancy_bounds_from_prim_path(
+            prim_path="/World/scene",
+            z_min=config.occupancy_map_config.z_min,
+            z_max=config.occupancy_map_config.z_max,
+            cell_size=config.occupancy_map_config.cell_size
+        )
+        config.occupancy_map_config.origin = origin
+        config.occupancy_map_config.lower_bound = lower_bound
+        config.occupancy_map_config.upper_bound = upper_bound
+
+
     occupancy_map = await occupancy_map_generate_from_prim_async(
-        "/World/scene",
-        cell_size=robot.occupancy_map_cell_size,
-        z_min=robot.occupancy_map_z_min,
-        z_max=robot.occupancy_map_z_max
+        origin=config.occupancy_map_config.origin,
+        lower_bound=config.occupancy_map_config.lower_bound,
+        upper_bound=config.occupancy_map_config.upper_bound,
+        cell_size=config.occupancy_map_config.cell_size
     )
+
     chase_camera_path = robot.build_chase_camera()
     set_viewport_camera(chase_camera_path)
     scenario = scenario_type.from_robot_occupancy_map(robot, occupancy_map)
