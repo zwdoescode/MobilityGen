@@ -229,7 +229,7 @@ class RandomPathFollowingScenario(Scenario):
         dist_to_target = np.sqrt(np.sum((pt_robot - path_end)**2))
 
         if dist_to_target < self.robot.path_following_stop_distance_threshold:
-            self.set_random_target_path()
+            self.is_alive = False
         else:
             vec_robot_unit = np.array([np.cos(current_pose.theta), np.sin(current_pose.theta)])
             vec_target = (pt_target - pt_robot)
