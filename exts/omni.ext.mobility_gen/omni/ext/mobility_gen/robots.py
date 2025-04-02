@@ -184,7 +184,7 @@ class Robot(Module):
         raise NotImplementedError
     
     def update_state(self):
-        pos, ori = self.robot.get_local_pose()
+        pos, ori = self.robot.get_world_pose()
         self.position.set_value(pos)
         self.orientation.set_value(ori)
         self.joint_positions.set_value(self.robot.get_joint_positions())
