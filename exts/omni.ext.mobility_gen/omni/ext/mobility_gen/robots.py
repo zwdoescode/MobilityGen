@@ -207,7 +207,7 @@ class Robot(Module):
         self.articulation_view.initialize()
         self.robot.set_world_velocity(np.array([0., 0., 0., 0., 0., 0.]))
         self.robot.post_reset()
-        position, orientation = self.robot.get_local_pose()
+        position, orientation = self.robot.get_world_pose()
         position[0] = pose.x
         position[1] = pose.y
         position[2] = self.z_offset
@@ -217,7 +217,7 @@ class Robot(Module):
         )
     
     def get_pose_2d(self) -> Pose2d:
-        position, orientation = self.robot.get_local_pose()
+        position, orientation = self.robot.get_world_pose()
         theta = rot_utils.quats_to_euler_angles(orientation)[2]
         return Pose2d(
             x=position[0],
