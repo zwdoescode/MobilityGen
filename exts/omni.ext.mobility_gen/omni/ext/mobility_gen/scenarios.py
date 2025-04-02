@@ -17,7 +17,7 @@
 import numpy as np
 from typing import Tuple
 
-from mobility_gen_path_planner import generate_paths
+from mobility_gen_path_planner import generate_paths, compress_path
 
 from omni.ext.mobility_gen.utils.path_utils import PathHelper, vector_angle
 from omni.ext.mobility_gen.utils.registry import Registry
@@ -193,6 +193,7 @@ class RandomPathFollowingScenario(Scenario):
         output = generate_paths(start, freespace)
         end = output.sample_random_end_point()
         path = output.unroll_path(end)
+        path, _ = compress_path(path)  # remove redundant points
         path = path[:, ::-1] # y,x -> x,y coordinates
         path = self.occupancy_map.pixel_to_world_numpy(path)
         self.target_path.set_value(path)
