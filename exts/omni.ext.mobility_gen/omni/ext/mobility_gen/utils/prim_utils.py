@@ -282,7 +282,7 @@ def _rotation_to_np_quat(r: Gf.Rotation):
     return np.array([real, imag[0], imag[1], imag[2]])
 
 
-def prim_get_local_transform(prim: Usd.Prim) -> Tuple[Gf.Vec3d, Gf.Rotation, Gf.Vec3d]:
+def prim_get_local_transform(prim: Usd.Prim) -> Tuple[np.ndarray, np.ndarray]:
     """
     From: https://docs.omniverse.nvidia.com/dev-guide/latest/programmer_ref/usd/transforms/get-local-transforms.html
 
@@ -303,7 +303,7 @@ def prim_get_local_transform(prim: Usd.Prim) -> Tuple[Gf.Vec3d, Gf.Rotation, Gf.
     return _translation_to_np(translation), _rotation_to_np_quat(rotation)
 
 
-def prim_get_world_transform(prim: Usd.Prim) -> Tuple[Gf.Vec3d, Gf.Rotation, Gf.Vec3d]:
+def prim_get_world_transform(prim: Usd.Prim) -> Tuple[np.ndarray, np.ndarray]:
     """
     From: https://docs.omniverse.nvidia.com/dev-guide/latest/programmer_ref/usd/transforms/get-world-transforms.html
 
