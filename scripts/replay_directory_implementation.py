@@ -70,9 +70,9 @@ if __name__ == "__main__":
 
     recording_paths = glob.glob(os.path.join(args.input, "*"))
 
-    count = 0
+    recording_count = 0
     for recording_path in recording_paths:
-        count += 1
+        recording_count += 1
         name = os.path.basename(recording_path)
 
         output_path = os.path.join(args.output, name)
@@ -113,7 +113,7 @@ if __name__ == "__main__":
         writer.copy_init(recording_path)
 
 
-        print(f"============== Replaying {count} / {len(recording_paths)}==============")
+        print(f"============== Replaying {recording_count} / {len(recording_paths)}==============")
         print(f"\tInput path: {recording_path}")
         print(f"\tOutput path: {output_path}")
         print(f"\tRgb enabled: {args.rgb_enabled}")
