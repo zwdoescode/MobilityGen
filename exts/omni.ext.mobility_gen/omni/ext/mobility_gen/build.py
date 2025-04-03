@@ -54,10 +54,11 @@ def load_scenario(path: str) -> Scenario:
 async def build_scenario_from_config(config: Config):
     robot_type = ROBOTS.get(config.robot_type)
     scenario_type = SCENARIOS.get(config.scenario_type)
-    new_stage()
+    # new_stage()
+    # add_reference_to_stage(config.scene_usd,"/World/scene")
+    open_stage(config.scene_usd)
     world = new_world(physics_dt=robot_type.physics_dt)
     await world.initialize_simulation_context_async()
-    add_reference_to_stage(config.scene_usd,"/World/scene")
     # open_stage(config.scene_usd)
 
     if config.occupancy_map_config.prim_path is not None:
