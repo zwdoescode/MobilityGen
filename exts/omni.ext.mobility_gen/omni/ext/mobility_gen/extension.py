@@ -43,8 +43,7 @@ from omni.ext.mobility_gen.inputs import GamepadDriver, KeyboardDriver
 from omni.ext.mobility_gen.scenarios import SCENARIOS, Scenario
 from omni.ext.mobility_gen.utils.global_utils import get_world, new_world, set_viewport_camera
 from omni.ext.mobility_gen.robots import ROBOTS
-from omni.ext.mobility_gen.config import Config, OccupancyMapConfig
-from omni.ext.mobility_gen.build import build_scenario_from_config
+from omni.ext.mobility_gen.config import Config
 from omni.ext.mobility_gen.occupancy_map import OccupancyMap
 
 
@@ -246,19 +245,17 @@ class MobilityGenExtension(omni.ext.IExt):
 
             occupancy_map = OccupancyMap.from_ros_yaml(self.omap_field_string_model.as_string)
 
-            # Open stage
+            # Open stage and save local copy
             open_stage(scene_usd_str)
             self.cached_stage_path = os.path.join(tempfile.mkdtemp(), "stage.usd")
-
-            # Add ground plane
-            objects.GroundPlane("/World/ground_plane", visible=False)
-            
-            # Save the stage with ground plane
             save_stage(self.cached_stage_path)
 
             # Initialize world
             world = new_world(physics_dt=robot_type.physics_dt)
             await world.initialize_simulation_context_async()
+
+            # Add ground plane
+            objects.GroundPlane("/World/ground_plane", visible=False)
             
             # Add robot
             robot = robot_type.build("/World/robot")
