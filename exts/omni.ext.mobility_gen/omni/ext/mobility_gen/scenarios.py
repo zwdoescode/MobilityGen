@@ -15,6 +15,8 @@
 
 
 import numpy as np
+import PIL.Image
+from PIL import Image, ImageDraw
 from typing import Tuple
 
 from mobility_gen_path_planner import generate_paths, compress_path
@@ -49,6 +51,9 @@ class Scenario(Module):
     def step(self, step_size: float) -> bool:
         raise NotImplementedError
 
+    def get_visualization_image(self):
+        image = self.occupancy_map.ros_image()
+        return image
 
 SCENARIOS = Registry[Scenario]()
 
@@ -253,3 +258,17 @@ class RandomPathFollowingScenario(Scenario):
 
         return self.is_alive
 
+    def get_visualization_image(self):
+        image = self.occupancy_map.ros_image().copy().convert("RGBA")
+        draw = ImageDraw.Draw(image)
+        path = self.target_path.get_value()
+        if path is not None:
+            line_coordinates = []
+            path_pixels = self.occupancy_map.world_to_pixel_numpy(path)
+            for i in range(len(path_pixels)):
+                line_coordinates.append(int(path_pixels[i, 0]))
+                line_coordinates.append(int(path_pixels[i, 1]))
+            width_pixels = self.robot.occupancy_map_radius / self.occupancy_map.resolution
+            draw.line(line_coordinates, fill="green", width=int(width_pixels/2), joint="curve")
+            
+        return image

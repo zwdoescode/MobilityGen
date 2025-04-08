@@ -132,9 +132,9 @@ class MobilityGenExtension(omni.ext.IExt):
                     self._occupancy_map_image_provider
                 )
 
-    def draw_occ_map(self):
+    def draw_visualization_image(self):
         if self.scenario is not None:
-            image = self.scenario.occupancy_map.ros_image().copy().convert("RGBA")
+            image = self.scenario.get_visualization_image().copy().convert("RGBA")
             carb.log_warn(image)
             data = list(image.tobytes())
             self._occupancy_map_image_provider.set_bytes_data(data, [image.width, image.height])
@@ -202,6 +202,7 @@ class MobilityGenExtension(omni.ext.IExt):
         self.scenario.reset()
         if self.recording_enabled:
             self.start_new_recording()
+        self.draw_visualization_image()
 
     def on_physics(self, step_size: int):
 
@@ -270,13 +271,13 @@ class MobilityGenExtension(omni.ext.IExt):
             self.scenario = scenario_type.from_robot_occupancy_map(robot, occupancy_map)
 
             # Draw the occupancy map
-            self.draw_occ_map()
+            self.draw_visualization_image()
 
             # Run the scenario
             await world.reset_async()
-            self.scenario.reset()
             world.add_physics_callback("scenario_physics", self.on_physics)
 
+            self.reset()
 
 
         asyncio.ensure_future(_build_scenario_async())
