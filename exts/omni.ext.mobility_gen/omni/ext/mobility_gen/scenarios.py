@@ -67,6 +67,7 @@ class KeyboardTeleoperationScenario(Scenario):
     def reset(self):
         pose = self.pose_sampler.sample(self.buffered_occupancy_map)
         self.robot.set_pose_2d(pose)
+        self.update_state()
 
     def step(self, step_size):
 
@@ -105,6 +106,7 @@ class GamepadTeleoperationScenario(Scenario):
     def reset(self):
         pose = self.pose_sampler.sample(self.buffered_occupancy_map)
         self.robot.set_pose_2d(pose)
+        self.update_state()
 
     def step(self, step_size: float):
 
@@ -139,6 +141,7 @@ class RandomAccelerationScenario(Scenario):
         pose = self.pose_sampler.sample(self.buffered_occupancy_map)
         self.robot.set_pose_2d(pose)
         self.is_alive = True
+        self.update_state()
 
     def step(self, step_size: float):
 
@@ -205,6 +208,7 @@ class RandomPathFollowingScenario(Scenario):
         self.robot.set_pose_2d(pose)
         self.set_random_target_path()
         self.is_alive = True
+        self.update_state()
     
     def step(self, step_size: float):
 
