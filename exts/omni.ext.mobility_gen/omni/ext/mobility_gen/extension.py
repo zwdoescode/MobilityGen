@@ -100,12 +100,13 @@ class MobilityGenExtension(omni.ext.IExt):
                         self.omap_field = ui.StringField(model=self.omap_field_string_model, height=25)
 
                     with ui.HStack():
+                        ui.Label("Robot Type")
+                        self.robot_combo_box = ui.ComboBox(0, *ROBOTS.names())
+                        
+                    with ui.HStack():
                         ui.Label("Scenario Type")
                         self.scenario_combo_box = ui.ComboBox(0, *SCENARIOS.names())
 
-                    with ui.HStack():
-                        ui.Label("Robot Type")
-                        self.robot_combo_box = ui.ComboBox(0, *ROBOTS.names())
 
                     ui.Button("Build", clicked_fn=self.build_scenario)
                     # ui.Button("Build", clicked_fn=self.build_scenario)
