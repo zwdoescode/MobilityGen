@@ -165,21 +165,30 @@ Below details a typical workflow for collecting data with MobilityGen.
 
 ### Step 2 - Load a stage
 
+To get started, we'll open an example warehouse stage.
+
 1. Select ``File`` -> ``Open``
 
-2. Enter the following URL under file (change this to use your environment)
+2. Enter the following URL under ``File name`` 
 
     ```
     http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/4.2/Isaac/Environments/Simple_Warehouse/warehouse_multiple_shelves.usd
     ```
+3. Click ``Open File``
+
+    > If you see a prompt ``Opening a Read Only File`` appear you can click ``Open Original File``
+
+After a few seconds, you should see the stage appear.
 
 ### Step 3 - Create an occupancy map
 
-To use MobilityGen, we first need to build an occupancy map for the environment.
+Next, we need need to build an occupancy map for the environment.
 
 To do this, we'll use the Occupancy Map tool provided with Isaac Sim
 
 1. Select ``Tools`` -> ``Robotics`` -> ``Occupancy Map`` to open the Occupancy Map extension
+
+    > You may need to also click the ``Occupancy Map`` tab in the bottom window pane to see the extension window.
 
 2. In the ``Occupancy Map`` window set ``Origin`` to 
 
@@ -213,6 +222,9 @@ To do this, we'll use the Occupancy Map tool provided with Isaac Sim
 
 11. In a text editor of choice, create a new file named ``~/MobilityGenData/maps/warehouse_multiple_shelves/map.yaml``
 
+    > Note: ``~`` corresponds to your user's home directory.  By default,
+    > we'll keep our data in ``~/MobilityGenData``
+
 12. Paste the YAML text copied from the ``Visualization`` window into the created file.  
 
 13. Edit the line ``image: warehouse_multiple_shelves.png`` to read ``image: map.png``
@@ -221,9 +233,11 @@ To do this, we'll use the Occupancy Map tool provided with Isaac Sim
 
 11. Back in the ``Visualization`` window click ``Save Image``
 
-12. Save the image to ``~/MobilityGenData/maps/warehouse_multiple_shelves/map.png``
+12. In the tree explorer open the folder ``~/MobilityGenData/maps/warehouse_multiple_shelves``
 
-    > Note: The image file name must match that specified in the YAML file saved above. 
+12. Under file name enter ``map.png``
+
+13. Click ``Save``
 
 That's it!  You should now have a folder ``~/MobilityGenData/maps/warehouse_multiple_shelves/`` with a file named
 ``map.yaml`` and ``map.png`` inside.
@@ -233,7 +247,9 @@ That's it!  You should now have a folder ``~/MobilityGenData/maps/warehouse_mult
 
 ### Step 4 - Build a scenario
 
-Perform the following steps in the ``MobilityGen`` extension window.
+Now that we have a ROS format Occupancy Map of our environment, we're ready to use MobilityGen!
+
+Perform the following steps in the ``MobilityGen`` extension window to build a new scenario.
 
 1. Under ``Stage`` paste the following, corresponding to the environment USD we used in [Step 3](#step-3---create-an-occupancy-map)
 
@@ -241,10 +257,10 @@ Perform the following steps in the ``MobilityGen`` extension window.
     http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/4.2/Isaac/Environments/Simple_Warehouse/warehouse_multiple_shelves.usd
     ```
 
-2. Under ``Occupancy Map`` enter the following corresponding to the folder we created in [Step 3](#step-3---create-an-occupancy-map)
+2. Under ``Occupancy Map`` enter the following corresponding to the Occupancy Map we created in [Step 3](#step-3---create-an-occupancy-map)
 
     ```
-    ~/MobilityGenData/maps/warehouse_multiple_shelves/
+    ~/MobilityGenData/maps/warehouse_multiple_shelves/map.yaml
     ```
 
 3. Under the ``Robot`` dropdown select ``H1Robot``
@@ -257,7 +273,7 @@ After a few seconds, you should see the scene and occupancy map appear.
 
 ### Step 3 - Initialize / reset the scenario
 
-1. Click the ``Reset`` function to randomly initialize the scenario.  Do this until the robot spawns inside the warehouse.
+1. Click the ``Reset`` function to randomly initialize the scenario.  Do this until the robot spawns in a desirable location.
 
 
 ### Step 4 - Test drive the robot

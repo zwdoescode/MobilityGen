@@ -102,7 +102,7 @@ class MobilityGenExtension(omni.ext.IExt):
                     with ui.HStack():
                         ui.Label("Robot Type")
                         self.robot_combo_box = ui.ComboBox(0, *ROBOTS.names())
-                        
+
                     with ui.HStack():
                         ui.Label("Scenario Type")
                         self.scenario_combo_box = ui.ComboBox(0, *SCENARIOS.names())
@@ -243,8 +243,9 @@ class MobilityGenExtension(omni.ext.IExt):
                 robot_type=robot_type_str,
                 scene_usd=scene_usd_str
             )
-
-            occupancy_map = OccupancyMap.from_ros_yaml(self.omap_field_string_model.as_string)
+            
+            occupancy_map = OccupancyMap.from_ros_yaml(
+                os.path.expanduser(self.omap_field_string_model.as_string))
 
             # Open stage and save local copy
             open_stage(scene_usd_str)
