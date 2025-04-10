@@ -271,12 +271,12 @@ Perform the following steps in the ``MobilityGen`` extension window to build a n
 
 After a few seconds, you should see the scene and occupancy map appear.
 
-### Step 3 - Initialize / reset the scenario
+### Step 5 - Initialize / reset the scenario
 
 1. Click the ``Reset`` function to randomly initialize the scenario.  Do this until the robot spawns in a desirable location.
 
 
-### Step 4 - Test drive the robot
+### Step 6 - Test drive the robot
 
 Before you start recording, try moving the robot around to get a feel for it
 
@@ -287,7 +287,7 @@ To move the robot, use the following keys
 - ``S`` - Move Backwards
 - ``D`` - Turn right
 
-### Step 5 - Start recording!
+### Step 7 - Start recording!
 
 Once you're comfortable, you can record a log.
 
@@ -299,7 +299,7 @@ Once you're comfortable, you can record a log.
 
 The data is recorded to ``~/MobilityGenData/recordings`` by default.
 
-### Step 6 - Render data
+### Step 8 - Render data
 
 If you've gotten this far, you've recorded a trajectory, but it doesn't include the rendered sensor data.
 
@@ -324,7 +324,7 @@ Rendering the sensor data is done offline.  To do this call the following
 
 That's it! Now the data with renderings should be stored in ``~/MobilityGenData/replays``.
 
-### Step 7 - Visualize the Data
+### Step 9 - Visualize the Data
 
 We provide a few examples in the [examples](./examples) folder for working with the data.
 
