@@ -13,19 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import time
-import os
+
 import numpy as np
+import numbers
 from path_helper_cuda import find_nearest_cuda
-
-
-def vector_angle(w: np.ndarray, v: np.ndarray):
-    delta_angle = np.arctan2(
-        w[1] * v[0] - w[0] * v[1], 
-        w[0] * v[0] + w[1] * v[1]
-    )
-    return delta_angle
-
 
 def nearest_point_on_segment(a: np.ndarray, b: np.ndarray, c: np.ndarray):
     a2b = b - a
@@ -39,9 +30,8 @@ def nearest_point_on_segment(a: np.ndarray, b: np.ndarray, c: np.ndarray):
         return b, dist
     else:
         return a + a2b_norm * dist, dist
-    
 
-class PathHelper:
+class TestPathHelper:
     def __init__(self, points: np.ndarray):
         self.points = points
         self._init_point_distances()
@@ -58,57 +48,7 @@ class PathHelper:
             length += dist
         self._point_distances[-1] = length
 
-    def point_distances(self):
-        return self._point_distances
-
-    def get_path_length(self):
-        length = 0.
-        for i in range(1, len(self.points)):
-            a = self.points[i - 1]
-            b = self.points[i]
-            dist = np.sqrt(np.sum((a - b)**2))
-            length += dist
-        return length
-    
-    def points_x(self):
-        return self.points[:, 0]
-    
-    def points_y(self):
-        return self.points[:, 1]
-   
-    def get_segment_by_distance_and_seg_id(self, distance, seg_id):
-        n = len(self.points)
-        # Validate seg_id to avoid out-of-range indexing
-        if seg_id < 0:
-            seg_id = 0
-        elif seg_id >= n - 1:
-            seg_id = n - 2
-
-        # If distance is less than the distance at seg_id, search backwards
-        if distance < self._point_distances[seg_id]:
-            # Search backwards to find the first segment where distance fits
-            for i in range(seg_id, 0, -1):
-                if distance >= self._point_distances[i - 1]:
-                    return (i - 1, i)
-            # If not found, it means distance is smaller than all points; return first segment
-            return (0, 1)
-        else:
-            # If distance is greater than or equal to the distance at seg_id, search forwards
-            for i in range(seg_id, n - 1):
-                if distance < self._point_distances[i + 1]:
-                    return (i, i + 1)
-            # If not found, distance is beyond last point; return last segment
-            return (n - 2, n - 1)
-
-    def get_point_by_distance(self, distance, seg_id):
-        a_idx, b_idx = self.get_segment_by_distance_and_seg_id(distance, seg_id)
-        a, b = self.points[a_idx], self.points[b_idx]
-        a_dist, b_dist = self._point_distances[a_idx], self._point_distances[b_idx]
-        u = (distance - a_dist) / ((b_dist - a_dist) + 1e-6)
-        u = np.clip(u, 0., 1.)
-        return a + u * (b - a)
-    
-    def find_nearest(self, point):
+    def find_nearesat_cpu(self, point):
         min_pt_dist_to_seg = 1e9
         min_pt_seg = None
         min_pt = None
@@ -130,7 +70,34 @@ class PathHelper:
         
         return min_pt, min_pt_dist_along_path, min_pt_seg, min_pt_dist_to_seg
 
-    def find_nearest(self, point):
+    def find_nearest_gpu(self, point):
         min_pt, min_pt_dist_along_path, min_pt_dist_to_seg, min_pt_seg = self._gpu_op.find_nearest(point)
         return min_pt, min_pt_dist_along_path, min_pt_seg, min_pt_dist_to_seg
 
+def test_path_helper():
+    np.random.seed(42)
+    path = np.random.rand(100, 2).astype(np.float64)
+    path_helper = TestPathHelper(path)
+
+    for i in range(100):
+        test_point = np.random.rand(2).astype(np.float32)
+        cpu_result = path_helper.find_nearesat_cpu(test_point)
+        gpu_result = path_helper.find_nearest_gpu(test_point)
+
+        equal = all(
+            (np.allclose(cpu_result[j], gpu_result[j])
+             if isinstance(cpu_result[j], np.ndarray)
+             else np.isclose(cpu_result[j], gpu_result[j]) 
+             if isinstance(cpu_result[j], numbers.Number)
+             else cpu_result[j] == gpu_result[j]
+            )
+            for j in range(len(cpu_result))
+        )
+        print(f"Test {i}: Equal = {equal}")
+        if not equal:
+            print(f"CPU result: {cpu_result}")
+            print(f"GPU result: {gpu_result}")
+        assert equal, f"Mismatch found in test {i}"
+
+if __name__ == "__main__":
+    test_path_helper()
