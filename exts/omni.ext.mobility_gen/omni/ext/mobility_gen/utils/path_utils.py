@@ -13,11 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import time
-import os
 import numpy as np
-from path_helper_cuda import find_nearest_cuda
-
+try:
+    from path_helper_cuda import find_nearest_cuda
+    CUDA_AVAILABLE = True
+except ImportError:
+    CUDA_AVAILABLE = False
 
 def vector_angle(w: np.ndarray, v: np.ndarray):
     delta_angle = np.arctan2(
@@ -45,7 +46,9 @@ class PathHelper:
     def __init__(self, points: np.ndarray):
         self.points = points
         self._init_point_distances()
-        self._gpu_op = find_nearest_cuda(self.points,self._point_distances)
+        self.use_gpu = CUDA_AVAILABLE
+        if self.use_gpu:
+            self._gpu_op = find_nearest_cuda(self.points,self._point_distances)
 
     def _init_point_distances(self):
         self._point_distances = np.zeros(len(self.points))
@@ -108,7 +111,7 @@ class PathHelper:
         u = np.clip(u, 0., 1.)
         return a + u * (b - a)
     
-    def find_nearest(self, point):
+    def find_nearest_cpu(self, point):
         min_pt_dist_to_seg = 1e9
         min_pt_seg = None
         min_pt = None
@@ -131,6 +134,8 @@ class PathHelper:
         return min_pt, min_pt_dist_along_path, min_pt_seg, min_pt_dist_to_seg
 
     def find_nearest(self, point):
-        min_pt, min_pt_dist_along_path, min_pt_dist_to_seg, min_pt_seg = self._gpu_op.find_nearest(point)
-        return min_pt, min_pt_dist_along_path, min_pt_seg, min_pt_dist_to_seg
-
+        if self.use_gpu:
+            min_pt, min_pt_dist_along_path, min_pt_dist_to_seg, min_pt_seg = self._gpu_op.find_nearest(point)
+            return min_pt, min_pt_dist_along_path, min_pt_seg, min_pt_dist_to_seg
+        else:
+            return self.find_nearest_cpu(point)

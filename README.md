@@ -52,7 +52,6 @@ To get started with MobilityGen follow the setup and usage instructions below!
 
 ## Table of Contents
 
-- [🛠️ Pre-requisites](#pre-requisites)
 - [🛠️ Setup](#setup)
 - [👍 Basic Usage](#usage)
 - [💡 How To Guides](#guides)
@@ -61,27 +60,6 @@ To get started with MobilityGen follow the setup and usage instructions below!
     - [How to implement a custom scenario](#how-to-custom-scenario)
 - [📝 Data Format](#-data-format)
 - [👏 Contributing](#-contributing)
-
-<a id="pre-requisites"></a>
-## 🛠️ Pre-requisites
-
-MobilityGen need CUDA to accelerate the program, you must have the NVIDIA CUDA Toolkit installed on your system.
-
-### CUDA 12.2 Installation Example (for Ubuntu 22.04)
-
-```
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin
-sudo mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600
-
-wget https://developer.download.nvidia.com/compute/cuda/12.2.2/local_installers/cuda-repo-ubuntu2204-12-2-local_12.2.2-535.104.05-1_amd64.deb
-sudo dpkg -i cuda-repo-ubuntu2204-12-2-local_12.2.2-535.104.05-1_amd64.deb
-
-sudo cp /var/cuda-repo-ubuntu2204-12-2-local/cuda-*-keyring.gpg /usr/share/keyrings/
-sudo apt-get update
-sudo apt-get -y install cuda
-```
-
-> *You can adjust these instructions to match your system and required driver version.*
 
 <a id="setup"></a>
 ## 🛠️ Setup
@@ -144,7 +122,32 @@ Next, we'll call ``link_app.sh`` to link the Isaac Sim installation directory to
     ../app/python.sh -m pip install -e .
     ```
 
-    > Note: If you run into an error related to pybind11 while running this command, you may try ``../app/python.sh -m pip install wheel`` and/or ``../app/python.sh -m pip install pybind11[global]``.
+    > **Note**: If you run into an error related to pybind11 while running this command, you may try ``../app/python.sh -m pip install wheel`` and/or ``../app/python.sh -m pip install pybind11[global]``.
+
+    > **Note**: 
+    > When you use the `RandomPathFollowingScenario` module, you can enable GPU acceleration by setting environment variable `WITH_GPU` to `1`, for example:  
+    > `WITH_GPU=1 ../app/python.sh -m pip install -e .`  
+    > This will offload some heavy tasks to the GPU for better performance.  
+    > **Attention:**  
+    > - If you add `WITH_GPU` to `1`, **NVIDIA CUDA Toolkit must be installed** on your system, or compilation will fail.  
+    > - The simplest way to check if CUDA Toolkit is available is to type `nvcc` in your terminal and verify that the CUDA compiler is present.
+    > - Currently, this GPU acceleration is only supported on NVIDIA GPUs with **Ampere architecture or newer**.
+    > For more detailed installation instructions and the latest CUDA Toolkit versions, please visit the official NVIDIA CUDA Toolkit download page:  
+    > [https://developer.nvidia.com/cuda-toolkit](https://developer.nvidia.com/cuda-toolkit)
+    > #### Example: CUDA 12.2 Installation on Ubuntu 22.04
+    >
+    > ```
+    > wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin
+    > sudo mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600
+    >
+    > wget https://developer.download.nvidia.com/compute/cuda/12.2.2/local_installers/cuda-repo-ubuntu2204-12-2-local_12.2.2-535.104.05-1_amd64.deb
+    > sudo dpkg -i cuda-repo-ubuntu2204-12-2-local_12.2.2-535.104.05-1_amd64.deb
+    >
+    > sudo cp /var/cuda-repo-ubuntu2204-12-2-local/cuda-*-keyring.gpg /usr/share/keyrings/
+    > sudo apt-get update
+    > sudo apt-get -y install cuda
+    > ```
+    > *You can adjust these instructions to match your system and required driver version.*
 
 ### Step 4 - Launch Isaac Sim
 
