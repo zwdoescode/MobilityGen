@@ -1,5 +1,6 @@
 build
 *.egg-info
 mobility_gen_path_planner/*.so
+path_helper_cuda/*.so
 .pytest_cache
 __pycache__

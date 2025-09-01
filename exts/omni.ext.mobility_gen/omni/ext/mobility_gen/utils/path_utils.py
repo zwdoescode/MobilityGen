@@ -13,9 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 import numpy as np
-
+try:
+    from path_helper_cuda import find_nearest_cuda
+    CUDA_AVAILABLE = True
+except ImportError:
+    CUDA_AVAILABLE = False
 
 def vector_angle(w: np.ndarray, v: np.ndarray):
     delta_angle = np.arctan2(
@@ -43,6 +46,9 @@ class PathHelper:
     def __init__(self, points: np.ndarray):
         self.points = points
         self._init_point_distances()
+        self.use_gpu = CUDA_AVAILABLE
+        if self.use_gpu:
+            self._gpu_op = find_nearest_cuda(self.points,self._point_distances)
 
     def _init_point_distances(self):
         self._point_distances = np.zeros(len(self.points))
@@ -72,29 +78,40 @@ class PathHelper:
     
     def points_y(self):
         return self.points[:, 1]
-    
-    def get_segment_by_distance(self, distance):
+   
+    def get_segment_by_distance_and_seg_id(self, distance, seg_id):
+        n = len(self.points)
+        # Validate seg_id to avoid out-of-range indexing
+        if seg_id < 0:
+            seg_id = 0
+        elif seg_id >= n - 1:
+            seg_id = n - 2
 
-        for i in range(0, len(self.points) - 1):
-            d_a = self._point_distances[i]
-            d_b = self._point_distances[i + 1]
+        # If distance is less than the distance at seg_id, search backwards
+        if distance < self._point_distances[seg_id]:
+            # Search backwards to find the first segment where distance fits
+            for i in range(seg_id, 0, -1):
+                if distance >= self._point_distances[i - 1]:
+                    return (i - 1, i)
+            # If not found, it means distance is smaller than all points; return first segment
+            return (0, 1)
+        else:
+            # If distance is greater than or equal to the distance at seg_id, search forwards
+            for i in range(seg_id, n - 1):
+                if distance < self._point_distances[i + 1]:
+                    return (i, i + 1)
+            # If not found, distance is beyond last point; return last segment
+            return (n - 2, n - 1)
 
-            if distance < d_b:
-                return (i, i + 1)
-            
-        i = len(self.points) - 2
-
-        return (i, i + 1)
-
-    def get_point_by_distance(self, distance):
-        a_idx, b_idx = self.get_segment_by_distance(distance)
+    def get_point_by_distance(self, distance, seg_id):
+        a_idx, b_idx = self.get_segment_by_distance_and_seg_id(distance, seg_id)
         a, b = self.points[a_idx], self.points[b_idx]
         a_dist, b_dist = self._point_distances[a_idx], self._point_distances[b_idx]
         u = (distance - a_dist) / ((b_dist - a_dist) + 1e-6)
         u = np.clip(u, 0., 1.)
         return a + u * (b - a)
     
-    def find_nearest(self, point):
+    def find_nearest_cpu(self, point):
         min_pt_dist_to_seg = 1e9
         min_pt_seg = None
         min_pt = None
@@ -115,3 +132,10 @@ class PathHelper:
 
         
         return min_pt, min_pt_dist_along_path, min_pt_seg, min_pt_dist_to_seg
+
+    def find_nearest(self, point):
+        if self.use_gpu:
+            min_pt, min_pt_dist_along_path, min_pt_dist_to_seg, min_pt_seg = self._gpu_op.find_nearest(point)
+            return min_pt, min_pt_dist_along_path, min_pt_seg, min_pt_dist_to_seg
+        else:
+            return self.find_nearest_cpu(point)

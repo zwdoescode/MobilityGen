@@ -38,4 +38,6 @@ path = output.unroll_path(end=end)
 
 ```
 
-
+## Path Helper Cuda
+The purpose of Path Helper CUDA is to accelerate the performance of the **find nearest** function in the path helper. In the path planning process, this function is often the main bottleneck of Random Path Following when running on the CPU.  
+For usage reference, please see the script `test/test_find_nearest_cuda.py`.
